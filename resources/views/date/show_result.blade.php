@@ -21,68 +21,101 @@
 </div>
 
 <div class="container">
-    <h3>排約結果 : </h3>
     <div class="row">
-    <div class="col-sm-12">
-        @foreach($data['result'] as $value)
-                @if($value['appointment_respond'] !=  null &&
-                    $value['appointment_respond'] != "noTime" &&
-                    $value['appointment_respond'] != "delete" &&
-                    $value['appointment_respond'] != "noSel")
-                <div class="col-md-4">
-                    <h3>{{ $value['appointment_user'] }}</h3>
-                    @if( $value['type'] == '視訊約會')
-                        <div>排約類型 : <strong>{{ $value['type'] }}</strong></div>
-                        <div>聊天類型 : <strong>{{ $value['chat_option'] }}</strong></div>
-                    @endif
-                    @if( $value['type'] == '餐廳約會')
-                        <div>排約類型 : {{ $value['type'] }}</div>
-                        <div>排約餐廳 : {{ $value['restaurant'] }}</div>
-                    @endif
-
-                    @php 
-                        $week = date('w',strtotime($value['appointment_result'])); 
-                        if($week == 0) $week = '日';
-                        if($week == 1) $week = '一';
-                        if($week == 2) $week = '二';
-                        if($week == 3) $week = '三';
-                        if($week == 4) $week = '四';
-                        if($week == 5) $week = '五';
-                        if($week == 6) $week = '六';
-                    @endphp
-                    @if( $value['type'] == '視訊約會')
-                        排約時間 : <br>
-                        {{ date('Y/m/d', strtotime($value['appointment_result'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['appointment_result'])) }} ~ {{ date('H點i分', strtotime($value['appointment_result'])+1*60*30) }}
-                    @else
-                        排約時間 : <br>
-                        {{ date('Y/m/d', strtotime($value['appointment_result'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['appointment_result'])) }} ~ {{ date('H點i分', strtotime($value['appointment_result'])+2*60*60) }}
-                    @endif
-
-                    <br>
-                    <br>
-                </div>
-
-                @else
-
-                <div class="col-md-4">
-                    <h3>{{ $value['appointment_user'] }}</h3>
-                    <div>
-                        @if($value['appointment_respond'] == "noTime")
-                            <div>以上時間無法配合，要另約時間</div>
-                        @elseif($value['appointment_respond'] == "delete")
-                            <div>對方拒絕邀約</div>
-                        @else
-                            <div>對方未回應</div>
+        @if(!empty($data['result']))
+            @foreach($data['result'] as $value)
+                @if($value['appointment_result'] !== 'otherSide')
+                    <div class="col-md-4">
+                        <h3>{{ $value['appointment_user'] }}</h3>
+                        <div>約會類型 : {{ $value['type'] }}</div>
+                        @if($value['type'] == '餐廳約會')
+                            <div>餐廳地點 : {{ $value['restaurant'] }}</div>
                         @endif
+                        @if($value['type'] == '視訊約會')
+                            <div>視訊方式 : {{ $value['chat_option'] }}</div>
+                        @endif
+                        @if($value['appointment_result'] == null || $value['appointment_result'] == 'noSel')
+                            <h5>排約結果 : <span style="color:red;">未回應</span></h5>
+                        @elseif($value['appointment_result'] == 'delete')
+                            <h5>排約結果 : <span style="color:red;">對方拒絕邀約</span></h5>
+                        @elseif($value['appointment_result'] == 'noTime')
+                            <h5>排約結果 : <span style="color:red;">以上時間無法配合，要另約時間</span></h5>
+                        @else
+                            @php 
+                                $week = date('w',strtotime($value['datetime'])); 
+                                if($week == 0) $week = '日';
+                                if($week == 1) $week = '一';
+                                if($week == 2) $week = '二';
+                                if($week == 3) $week = '三';
+                                if($week == 4) $week = '四';
+                                if($week == 5) $week = '五';
+                                if($week == 6) $week = '六';
+                            @endphp
+                            <h5>排約結果 : 
+                                <span style="color:green;">
+                                    {{ date('Y/m/d', strtotime($value['appointment_result'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['appointment_result'])) }}
+                                </span>
+                            </h5>
+                        @endif
+                        <br>
                     </div>
-                    <br>
-                    <br>
-                </div>
-            @endif
+                @endif
+            @endforeach
+        @endif
+        @if(!empty($data['result2']))
+            @foreach($data['result2'] as $value)
+                @if($value['appointment_result'] !== 'otherSide')
+                <div class="col-md-4">
+                        <h3>{{ $value['username'] }}</h3>
+                        <div>約會類型 : {{ $value['type'] }}</div>
+                        @if($value['type'] == '餐廳約會')
+                            <div>餐廳地點 : {{ $value['restaurant'] }}</div>
+                        @endif
+                        @if($value['type'] == '視訊約會')
+                            <div>視訊方式 : {{ $value['chat_option'] }}</div>
+                        @endif
+                        @if($value['appointment_result'] == null || $value['appointment_result'] == 'noSel')
+                            <h5>排約結果 : <span style="color:red;">未回應</span></h5>
+                        @elseif($value['appointment_result'] == 'delete')
+                            <h5>排約結果 : <span style="color:red;">對方拒絕邀約</span></h5>
+                        @elseif($value['appointment_result'] == 'noTime')
+                            <h5>排約結果 : <span style="color:red;">以上時間無法配合，要另約時間</span></h5>
+                        @else
+                            @php 
+                                $week = date('w',strtotime($value['datetime'])); 
+                                if($week == 0) $week = '日';
+                                if($week == 1) $week = '一';
+                                if($week == 2) $week = '二';
+                                if($week == 3) $week = '三';
+                                if($week == 4) $week = '四';
+                                if($week == 5) $week = '五';
+                                if($week == 6) $week = '六';
+                            @endphp
+                            <h5>排約結果 : 
+                                <span style="color:green;">
+                                    @php
+                                        $now = strtotime(date('Y-m-d H:i:s'));
+                                        $date_tomorrow = strtotime($value['appointment_result'])+24*60*60;
+                                    @endphp    
 
-        @endforeach
-
-    </div>
+                                    @if($now > $date_tomorrow)
+                                            <br>
+                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeZNRi_X19m5xG99lSlkNQOdcCVpOMnzGRFxT_gsNVmzrvIQ/viewform" target="__blank">約會滿意度調查表(女生用)</a>
+                                            <br>
+                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf729TuKGvkpx3rNoN290_mkVAlLN8ltp66oo0Jn2mCF2qf8w/viewform" target="__blank">約會滿意度調查表(男生用)</a>
+                                    @else
+                                        {{ date('Y/m/d', strtotime($value['appointment_result'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['appointment_result'])) }}
+                                    @endif
+                                    
+                                </span>
+                            </h5>
+                        @endif
+                        <br>
+                    </div>
+                @endif
+            @endforeach
+        @endif
+ 
     </div>
 </div>
 <br><br>

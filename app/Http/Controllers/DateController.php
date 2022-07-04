@@ -207,13 +207,13 @@ class DateController extends Controller
                         $AppointmentRegistration->chat_option = '破冰遊戲>聊天';
                         break;
                 }
-                $AppointmentRegistration->restaurant = '0';
+                //$AppointmentRegistration->restaurant = '0';
                 $AppointmentRegistration->datetime = $datetime;
             }
             if($type == "type2"){
                 $AppointmentRegistration->type = '餐廳約會';
                 $datetime = implode("、",$request->input()['datetime2']);
-                $AppointmentRegistration->chat_option = '0';
+                //$AppointmentRegistration->chat_option = '0';
                 $AppointmentRegistration->restaurant = $request->input()['date_restaurant'];
                 $AppointmentRegistration->datetime = $datetime;
             }
@@ -291,6 +291,7 @@ class DateController extends Controller
         $username = Session::get('username');
         $data = [];
         $data['result'] = AppointmentRegistration::where('username', $username)->get()->toArray();
+        $data['result2'] = AppointmentRegistration::where('appointment_user', $username)->get()->toArray();
 
         return view('date.show_result', [ 'data' => $data ]);
     }

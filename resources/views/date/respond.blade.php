@@ -34,13 +34,11 @@
                         @foreach($data['invitation_data'] as $key => $value)
                             <input type="hidden" name="respond_name[]" value="{{ $value['username'] }}">
                             <div class="col-md-12">
-                                <h3 style="">
-                                    {{ $value['username'] }}
-                                </h3>
+                                <h3><strong>{{ $value['username'] }}</strong></h3>
                                 @if($data['show'] == 'd' || empty($value['data_url_simple']))
-                                    <div>{{ $value['data_url'] }}</div>
+                                    <a href="{{ $value['data_url'] }}" target="__blank">{{ $value['data_url'] }}</a>
                                 @else
-                                    <div>{{ $value['data_url_simple'] }}</div>
+                                    <a href="{{ $value['data_url_simple'] }}" target="__blank">{{ $value['data_url_simple'] }}</a>
                                 @endif
                                 <div>約會形式 : {{ $value['type'] }}</div>
                                 @if($value['type'] == '餐廳約會')
@@ -95,6 +93,9 @@
                                 <label>
                                     <input type="checkbox" class="del{{$key+1}}" item={{$key+1}} onClick="delUser(event,this);" name="respond{{$key}}[]"  value="delete">
                                     <span>沒有意願排約</span>
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScysr88Bo35rnkzy-5fAtrEfy9JSECGsHkgiXYHjjrQzaWP3A/viewform" target="__blank">「拒絕邀約」調查表(女生用)</a>
+                                    
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSee6YEBIOyGu3LnRzAqTIjYtPWOD1QkqumWMGC3yJDYZ-YLGQ/viewform" target="__blank">「拒絕邀約」調查表(男生用)</a>
                                 </label>
                                 <br>
                                 <label>
@@ -110,7 +111,30 @@
                                     @elseif($value['appointment_respond'] == 'noSel')
                                         <h3 style="color:green">暫不回應(對方不會看到訊息)</h3>    
                                     @else
-                                        <h3 style="color:green">已回復 : 排約時段</h3>
+                                        <h3 style="color:green">已回復 : </h3>
+                                        <h4 style="color:green">
+                                            @php
+                                                $data = explode("、", $value['appointment_respond']);
+                                                foreach( $data as $val){
+                                                    $week = date('w',strtotime($val)); 
+                                                    if($week == 0) $week = '日';
+                                                    if($week == 1) $week = '一';
+                                                    if($week == 2) $week = '二';
+                                                    if($week == 3) $week = '三';
+                                                    if($week == 4) $week = '四';
+                                                    if($week == 5) $week = '五';
+                                                    if($week == 6) $week = '六';
+                                                    if($value['type'] == '視訊約會'){
+                                                        $res = date('Y/m/d', strtotime($val)).'('.$week.')  '.date('H點i分', strtotime($val)).'~'.date('H點i分', strtotime($val)+1*60*30);
+                                                    }
+                                                    if($value['type'] == '餐廳約會'){
+                                                        $res = date('Y/m/d', strtotime($val)).'('.$week.')  '.date('H點i分', strtotime($val)).'~'.date('H點i分', strtotime($val)+2*60*60);
+                                                    }
+                                                    echo $res."<br>";
+                                                }
+ 
+                                            @endphp 
+                                        </h4>
                                     @endif
                                 @endif
                            

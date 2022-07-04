@@ -38,15 +38,22 @@ class AppointmentRegistrationController extends AdminController
         $grid->column('appointment_respond', __('排約對象回應'));
         $grid->column('appointment_result', __('排約結果'))->display(function($data){
 
-            if($this->appointment_respond == "noTime" && $data == null){
-                $result = "對方接受邀約，但時間無法配合";
+            if($data == "noTime"){
+                $result = "以上時間無法配合，要另約時間";
                 return $result;
             }
-            if($this->appointment_respond == "delete" && $data == null){
+            if($data == "delete" ){
                 $result = "對方拒絕邀約";
                 return $result;
             }
-            if($this->appointment_respond == null && $data == null){
+            if($data == "noSel" ){
+                $result = "暫不回應";
+                return $result;
+            }
+            if($data == "otherSide"){
+                return $data;
+            }
+            if($this->appointment_respond == null){
                 $result = "未回應";
                 return $result;
             }
@@ -56,20 +63,22 @@ class AppointmentRegistrationController extends AdminController
             }
 
             $data = explode("、", $data);
-            $week = date('w',strtotime($data[0])); 
-            if($week == 0) $week = '日';
-            if($week == 1) $week = '一';
-            if($week == 2) $week = '二';
-            if($week == 3) $week = '三';
-            if($week == 4) $week = '四';
-            if($week == 5) $week = '五';
-            if($week == 6) $week = '六';
+            // $week = date('w',strtotime($data[0])); 
+            // if($week == 0) $week = '日';
+            // if($week == 1) $week = '一';
+            // if($week == 2) $week = '二';
+            // if($week == 3) $week = '三';
+            // if($week == 4) $week = '四';
+            // if($week == 5) $week = '五';
+            // if($week == 6) $week = '六';
                                                        
             if($this->type == '視訊約會'){
-                $result = date('Y/m/d', strtotime($data[0])).($week).date('H點i分', strtotime($data[0])).'~'.date('H點i分', strtotime($data[0])+1*30*60);
+                //$result = date('Y/m/d', strtotime($data[0])).($week).date('H點i分', strtotime($data[0])).'~'.date('H點i分', strtotime($data[0])+1*30*60);
+                $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+1*30*60);
             }
             if($this->type == '餐廳約會'){
-                $result = date('Y/m/d', strtotime($data[0])).($week).date('H點i分', strtotime($data[0])).'~'.date('H點i分', strtotime($data[0])+2*60*60);
+                //$result = date('Y/m/d', strtotime($data[0])).($week).date('H點i分', strtotime($data[0])).'~'.date('H點i分', strtotime($data[0])+2*60*60);
+                $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+2*60*60);
             }
 
             return $result;

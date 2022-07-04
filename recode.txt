@@ -1,5 +1,7 @@
+install laravel
 composer create-project --prefer-dist laravel/laravel:^6.0 test
 
+install laravel-admin
 composer require encore/laravel-admin:1.*
 php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
 php artisan admin:install

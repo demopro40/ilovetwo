@@ -23,15 +23,15 @@ class PairTimeService
                                             ->toArray();
 
         foreach($result as $value){
-            if($value['appointment_respond'] == 'delete'){
+            if($value['appointment_respond'] == 'delete' ||
+                $value['appointment_respond'] == 'noTime' ||
+                $value['appointment_respond'] == 'noSel'){
+                AppointmentRegistration::where('username', $value['username'])
+                    ->where('appointment_user', $value['appointment_user'])
+                    ->update(['appointment_result' => $value['appointment_respond']]);
                 continue;
             }
-            if($value['appointment_respond'] == 'noTime'){
-                continue;
-            }
-            if($value['appointment_respond'] == 'noSel'){
-                continue;
-            }
+
             $respond = explode("、", $value['appointment_respond']);
             foreach($respond as $val){
 
