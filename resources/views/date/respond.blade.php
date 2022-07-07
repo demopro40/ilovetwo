@@ -9,7 +9,9 @@
             background-color:#2b2b2b;
             color:#c3a367;
         }
-
+        a{
+            color:#c3a367;
+        }
     </style>
 </head>
 <body>
@@ -36,9 +38,9 @@
                             <div class="col-md-12">
                                 <h3><strong>{{ $value['username'] }}</strong></h3>
                                 @if($data['show'] == 'd' || empty($value['data_url_simple']))
-                                    <a href="{{ $value['data_url'] }}" target="__blank">{{ $value['data_url'] }}</a>
+                                    <a href="{{ $value['data_url'] }}" target="__blank"><u>{{ $value['data_url'] }}</u></a>
                                 @else
-                                    <a href="{{ $value['data_url_simple'] }}" target="__blank">{{ $value['data_url_simple'] }}</a>
+                                    <a href="{{ $value['data_url_simple'] }}" target="__blank"><u>{{ $value['data_url_simple'] }}</u></a>
                                 @endif
                                 <div>約會形式 : {{ $value['type'] }}</div>
                                 @if($value['type'] == '餐廳約會')
@@ -93,9 +95,9 @@
                                 <label>
                                     <input type="checkbox" class="del{{$key+1}}" item={{$key+1}} onClick="delUser(event,this);" name="respond{{$key}}[]"  value="delete">
                                     <span>沒有意願排約</span>
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScysr88Bo35rnkzy-5fAtrEfy9JSECGsHkgiXYHjjrQzaWP3A/viewform" target="__blank">「拒絕邀約」調查表(女生用)</a>
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScysr88Bo35rnkzy-5fAtrEfy9JSECGsHkgiXYHjjrQzaWP3A/viewform" target="__blank"><u>「拒絕邀約」調查表(女生用)</u></a>
                                     
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSee6YEBIOyGu3LnRzAqTIjYtPWOD1QkqumWMGC3yJDYZ-YLGQ/viewform" target="__blank">「拒絕邀約」調查表(男生用)</a>
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSee6YEBIOyGu3LnRzAqTIjYtPWOD1QkqumWMGC3yJDYZ-YLGQ/viewform" target="__blank"><u>「拒絕邀約」調查表(男生用)</u></a>
                                 </label>
                                 <br>
                                 <label>
@@ -111,8 +113,8 @@
                                     @elseif($value['appointment_respond'] == 'noSel')
                                         <h3 style="color:green">暫不回應(對方不會看到訊息)</h3>    
                                     @else
-                                        <h3 style="color:green">已回復 : </h3>
-                                        <h4 style="color:green">
+                                        <h5 style="color:green"><strong>已回復 : </strong></h5>
+                                        <h5 style="color:green">
                                             @php
                                                 $data = explode("、", $value['appointment_respond']);
                                                 foreach( $data as $val){
@@ -134,7 +136,7 @@
                                                 }
  
                                             @endphp 
-                                        </h4>
+                                        </h5>
                                     @endif
                                 @endif
                            

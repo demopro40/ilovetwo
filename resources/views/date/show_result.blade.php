@@ -9,6 +9,9 @@
             background-color:#2b2b2b;
             color:#c3a367;
         }
+        a{
+            color:#c3a367;
+        }
     </style>
 </head>
 <body>
@@ -91,20 +94,18 @@
                                 if($week == 5) $week = '五';
                                 if($week == 6) $week = '六';
                             @endphp
-                            <h5>排約結果 : 
+                            <h5>排約結果 : <br>
                                 <span style="color:green;">
                                     @php
                                         $now = strtotime(date('Y-m-d H:i:s'));
                                         $date_tomorrow = strtotime($value['appointment_result'])+24*60*60;
                                     @endphp    
-
+                                    {{ date('Y/m/d', strtotime($value['appointment_result'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['appointment_result'])) }}
                                     @if($now > $date_tomorrow)
                                             <br>
-                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeZNRi_X19m5xG99lSlkNQOdcCVpOMnzGRFxT_gsNVmzrvIQ/viewform" target="__blank">約會滿意度調查表(女生用)</a>
+                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeZNRi_X19m5xG99lSlkNQOdcCVpOMnzGRFxT_gsNVmzrvIQ/viewform" target="__blank"><u>約會滿意度調查表(女生用)</u></a>
                                             <br>
-                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf729TuKGvkpx3rNoN290_mkVAlLN8ltp66oo0Jn2mCF2qf8w/viewform" target="__blank">約會滿意度調查表(男生用)</a>
-                                    @else
-                                        {{ date('Y/m/d', strtotime($value['appointment_result'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['appointment_result'])) }}
+                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf729TuKGvkpx3rNoN290_mkVAlLN8ltp66oo0Jn2mCF2qf8w/viewform" target="__blank"><u>約會滿意度調查表(男生用)</u></a>                                   
                                     @endif
                                     
                                 </span>

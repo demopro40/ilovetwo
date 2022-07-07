@@ -91,11 +91,11 @@
             <br>
             @if($data['show'] == 'd' || empty($value['data_url_simple']))
                 <a href="{{ $value['data_url'] }}" target="_blank" style="color:#c3a367;">
-                    {{ $value['data_url'] }}
+                    <u>{{ $value['data_url'] }}</u>
                 </a>
             @else
                 <a href="{{ $value['data_url_simple'] }}" target="_blank" style="color:#c3a367;">
-                    {{ $value['data_url_simple'] }}
+                    <u>{{ $value['data_url_simple'] }}</u>
                 </a>
             @endif
         </div>&nbsp;
