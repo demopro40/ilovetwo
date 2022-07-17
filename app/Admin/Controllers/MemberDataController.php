@@ -30,6 +30,7 @@ class MemberDataController extends AdminController
         $grid->column('username', __('會員名稱'));
         $grid->column('identity', __('身分證'))->sortable();
         $grid->column('phone', __('手機號'));
+        $grid->column('email', __('email'));
         $grid->column('gender', __('性別'))->radio([
             'm' => '男',
             'f' => '女',
@@ -105,6 +106,7 @@ class MemberDataController extends AdminController
         $form->text('username', __('會員名稱'));
         $form->text('identity', __('身分證'));
         $form->text('phone', __('手機號'));
+        $form->text('email', __('email'));
         $form->radio('gender', __('性別'))->options(['m'=>'男','f'=>'女']);
         $form->text('consultant', __('顧問'));
         $form->text('data_url', __('資料連結'));

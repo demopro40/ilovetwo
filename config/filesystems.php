@@ -69,6 +69,10 @@ return [
             'visibility' => 'public',
             'url' => env('APP_URL') . '/upload/',
         ],
+        'uploads' => [
+            'driver' => 'local',
+            'root' => storage_path('app/uploads'),
+        ],
     ],
 
 ];

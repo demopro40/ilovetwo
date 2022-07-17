@@ -323,4 +323,22 @@ class DateController extends Controller
         }
         return redirect()->back();
     }
+
+    public function dating_survey_m()
+    {
+        if(!Session::has('username')){
+            return redirect('/date/login');
+        }
+        $data = [];
+        return view('date.dating_survey_m', [ 'data' => $data ]);
+    }
+
+    public function dating_survey_f()
+    {
+        if(!Session::has('username')){
+            return redirect('/date/login');
+        }
+        $data = [];
+        return view('date.dating_survey_f', [ 'data' => $data ]);
+    }
 }
