@@ -30,11 +30,11 @@ class AppointmentRegistrationController extends AdminController
 
         $grid->column('id', __('ID'))->sortable();
         $grid->column('username', __('排約會員'));
+        $grid->column('appointment_user', __('排約對象'));
         $grid->column('type', __('排約類型'));
         $grid->column('chat_option', __('聊天選項'));
         $grid->column('restaurant', __('餐廳地點'));
         $grid->column('datetime', __('排約時段'));
-        $grid->column('appointment_user', __('排約對象'));
         $grid->column('appointment_respond', __('排約對象回應'));
         $grid->column('appointment_result', __('排約結果'))->display(function($data){
 
@@ -54,11 +54,13 @@ class AppointmentRegistrationController extends AdminController
                 return $data;
             }
             if($this->appointment_respond == null){
-                $result = "未回應";
+                //$result = "未回應";
+                $result = NULL;
                 return $result;
             }
             if($this->appointment_respond != null && $data == null){
-                $result = "等待配對結果";
+                //$result = "等待配對結果";
+                $result = NULL;
                 return $result;
             }
 
@@ -150,11 +152,11 @@ class AppointmentRegistrationController extends AdminController
 
         $form->display('id', __('ID'));
         $form->text('username', __('會員名稱'))->required();
+        $form->text('appointment_user', __('排約對象'))->required();
         $form->radio('type', __('排約類型'))->options(['視訊約會' =>'視訊約會', '餐廳約會' =>'餐廳約會'])->required();
         $form->select('chat_option', __('聊天選項'))->options(['請選擇' => '請選擇', '自由聊天' => '自由聊天', '選擇話題聊天' => '選擇話題聊天', '破冰遊戲>聊天' => '破冰遊戲>聊天']);
         $form->text('restaurant', __('餐廳地點'));
         $form->text('datetime', __('選擇的時間'));
-        $form->text('appointment_user', __('排約對象'))->required();
         $form->text('appointment_respond', __('排約對象回應'));
         $form->text('appointment_result', __('排約結果'))->help("排約時間要按照格式 例:2022-05-11 20:00:00、2022-05-12 20:00:00");
         // $form->display('created_at', __('建立時間'));

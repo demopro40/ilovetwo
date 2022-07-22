@@ -290,8 +290,22 @@ class DateController extends Controller
         }
         $username = Session::get('username');
         $data = [];
-        $data['result'] = AppointmentRegistration::where('username', $username)->get()->toArray();
-        $data['result2'] = AppointmentRegistration::where('appointment_user', $username)->get()->toArray();
+        $result = AppointmentRegistration::where('username', $username)
+                            ->whereNotNull('appointment_respond')
+                            ->where('appointment_respond','!=', 'noSel')
+                            ->get()
+                            ->toArray();
+        $result2 = AppointmentRegistration::where('appointment_user', $username)
+                            ->whereNotNull('appointment_respond')
+                            ->where('appointment_respond','!=', 'noSel')
+                            ->get()
+                            ->toArray();  
+        foreach($result2 as $key => $value){
+            $result2[$key]['username'] = $value['appointment_user'];
+            $result2[$key]['appointment_user'] = $value['username'];
+        }  
+
+        $data['result'] = array_merge($result,$result2);
 
         return view('date.show_result', [ 'data' => $data ]);
     }
