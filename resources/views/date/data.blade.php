@@ -17,7 +17,7 @@
     }
     
     //星期五的六點 或 週六 或 週日
-    if( ($w == 5 && $H == 6) || $w == 6 || $w == 0){
+    if( ($w == 5 && $H >= 6) || $w == 6 || $w == 0){
         $show3 = true;
     }
 
@@ -77,7 +77,7 @@
         @if($show3)
             <a class="btn btn-primary" href="/date/show_result"
             style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">
-                排約結果
+                配對結果
             </a>
         @endif
         

@@ -118,6 +118,9 @@ class DateController extends Controller
 
     public function invitation()
     {
+        if($this->checkDate(1) == false){
+            return redirect('/date/data');
+        }
         if(!Session::has('username')){
             return redirect('/date/login');
         }
@@ -232,6 +235,9 @@ class DateController extends Controller
 
     public function respond()
     {
+        if($this->checkDate(2) == false){
+            return redirect('/date/data');
+        }
         if(!Session::has('username')){
             return redirect('/date/login');
         }
@@ -240,7 +246,7 @@ class DateController extends Controller
         $data = [];
         
         $invitation_data = AppointmentRegistration::where('appointment_user', $username)
-                                ->whereNotNull('appointment_result')
+                                ->whereNull('appointment_result')
                                 ->get()
                                 ->toArray();
         foreach($invitation_data as $key => $value){ 
@@ -293,6 +299,9 @@ class DateController extends Controller
 
     public function show_result()
     {
+        if($this->checkDate(3) == false){
+            return redirect('/date/data');
+        }
         if(!Session::has('username')){
             return redirect('/date/login');
         }
@@ -346,17 +355,49 @@ class DateController extends Controller
         return redirect()->back();
     }
 
+    private function checkDate($type)
+    {
+        $w = date('w',time());
+        $H = date('H',time());
+
+        if($type == 1){
+            //星期一和星期二
+            if($w == 1 || $w == 2){
+                return true;
+            }
+        }elseif($type == 2){
+            //星期三和星期四
+            if($w == 3 || $w == 4){
+                return true;
+            }
+        }elseif($type == 3){
+            //星期五的六點之後 或 週六 或 週日
+            if( ($w == 5 && $H >= 6) || $w == 6 || $w == 0){
+                return true;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    private function test1()
+    {
+        return redirect('/date/data');
+    }
+
     public function test()
     {
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
         //讀取項目根目錄下data文件夾裏的test.xlsx 並返回表格對象
         $spreadsheet = $reader->load(storage_path('/app/uploads/dating_survey_m.xlsx'));
+
         //讀取第一個表
         $sheet = $spreadsheet->getSheet(0);
 
         //獲取單元格的集合
         $cellCollection = $sheet->getCellCollection();
+
         //獲取具有單元格記錄的工作表的最高列和最高行。
         $column = $cellCollection->getHighestRowAndColumn();
 
@@ -370,6 +411,6 @@ class DateController extends Controller
                 $data[$key] = $value;
             }
         }
-        dump($data);
+        //dump($data);
     }
 }

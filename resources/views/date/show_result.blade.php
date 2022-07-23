@@ -25,10 +25,13 @@
     <a href="/date/data" class="btn btn-primary">回上頁</a>
 </div>
 <div class="jumbotron text-center">
-    <h2><strong>排約結果</strong></h2>
+    <h2><strong>配對結果</strong></h2>
 </div>
 
 <div class="container">
+    @if(empty($data['result']))
+        <h2 class="text-center" style="color:red;">目前沒有配對結果</h2>
+    @endif
     <div class="row">
     @if(!empty($data['result']))
             @foreach($data['result'] as $value)
@@ -89,7 +92,6 @@
                 @endif
             @endforeach
         @endif
- 
     </div>
 </div>
 <br><br>
