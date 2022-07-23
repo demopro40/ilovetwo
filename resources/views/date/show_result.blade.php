@@ -76,11 +76,11 @@
                                     <a href="{{ $dating_survey_m }}" target="__blank"><u>約會滿意度調查表(男生用)</u></a>             
                                 @endif
                                 @if(true)
-                                    <br>
+                                    <!-- <br>
                                     <button class="btn btn-primary" onclick="dateMsg();">約會訊息表</button>   
                                     <div class="msg{{$value['id']}}" style="display:none;">
                                         123
-                                    </div>     
+                                    </div>      -->
                                 @endif
                             </h5>
                         @endif

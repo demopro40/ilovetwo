@@ -14,6 +14,11 @@ use App\Services\PairTimeService;
 use Session;
 use Validator;
 
+
+//use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class DateController extends Controller
 {
     public function __construct(PairTimeService $pairTimeService)
@@ -234,8 +239,11 @@ class DateController extends Controller
         $username = Session::get('username');
         $data = [];
         
-        $invitation_data = AppointmentRegistration::where('appointment_user', $username)->get()->toArray();
-        foreach($invitation_data as $key => $value){
+        $invitation_data = AppointmentRegistration::where('appointment_user', $username)
+                                ->whereNotNull('appointment_result')
+                                ->get()
+                                ->toArray();
+        foreach($invitation_data as $key => $value){ 
             $data = MemberData::where('username', $value['username'])->get(['data_url', 'data_url_simple'])->toArray();
             $invitation_data[$key]['data_url'] = $data[0]['data_url'];
             $invitation_data[$key]['data_url_simple'] = $data[0]['data_url_simple'];
@@ -338,21 +346,30 @@ class DateController extends Controller
         return redirect()->back();
     }
 
-    public function dating_survey_m()
+    public function test()
     {
-        if(!Session::has('username')){
-            return redirect('/date/login');
-        }
-        $data = [];
-        return view('date.dating_survey_m', [ 'data' => $data ]);
-    }
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
-    public function dating_survey_f()
-    {
-        if(!Session::has('username')){
-            return redirect('/date/login');
+        //讀取項目根目錄下data文件夾裏的test.xlsx 並返回表格對象
+        $spreadsheet = $reader->load(storage_path('/app/uploads/dating_survey_m.xlsx'));
+        //讀取第一個表
+        $sheet = $spreadsheet->getSheet(0);
+
+        //獲取單元格的集合
+        $cellCollection = $sheet->getCellCollection();
+        //獲取具有單元格記錄的工作表的最高列和最高行。
+        $column = $cellCollection->getHighestRowAndColumn();
+
+        //內容爲值存入數組
+        $data = array();
+
+        for($i = 1; $i <= $column['row']; $i++){//行
+            for($j = 'A'; $j <= $column['column']; $j++){//列
+                $key = $j.$i;
+                $value = $sheet->getCell($key)->getValue();
+                $data[$key] = $value;
+            }
         }
-        $data = [];
-        return view('date.dating_survey_f', [ 'data' => $data ]);
+        dump($data);
     }
 }
