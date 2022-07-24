@@ -358,8 +358,8 @@ class DateController extends Controller
     private function checkDate($type)
     {
         $w = date('w',time());
-        $H = date('H',time());
-
+        //$H = date('H',time());
+        return true;
         if($type == 1){
             //星期一和星期二
             if($w == 1 || $w == 2){
@@ -372,17 +372,12 @@ class DateController extends Controller
             }
         }elseif($type == 3){
             //星期五的六點之後 或 週六 或 週日
-            if( ($w == 5 && $H >= 6) || $w == 6 || $w == 0){
+            if($w == 6 || $w == 0){
                 return true;
             }
         }else{
             return false;
         }
-    }
-
-    private function test1()
-    {
-        return redirect('/date/data');
     }
 
     public function test()
