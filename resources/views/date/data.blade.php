@@ -21,9 +21,6 @@
         $show3 = true;
     }
 
-    $show1 = true;
-    $show2 = true;
-    $show3 = true;
 @endphp
 
 @include('date.components.head')

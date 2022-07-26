@@ -22,6 +22,7 @@ Route::group(['prefix'=>'date'], function(){
     Route::get('/respond', 'DateController@respond');
     Route::post('/respond_post', 'DateController@respond_post');
     Route::get('/show_result', 'DateController@show_result');
+    Route::post('/date_msg_post', 'DateController@date_msg_post');
     Route::get('/logout', 'DateController@logout');
     Route::get('/restaurant', 'DateController@restaurant');
     Route::get('/pair_time', 'DateController@pair_time');

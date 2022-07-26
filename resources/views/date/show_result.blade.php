@@ -9,6 +9,7 @@
         .jumbotron{
             background-color:#c3a367;
             color:#2b2b2b;
+            border-radius:0px;
         }
         body{
             background-color:#2b2b2b;
@@ -68,6 +69,8 @@
                                     $date_time = strtotime($value['appointment_result']);
                                     $date_start = $date_time + 3*60*60;
                                     $date_over = $date_time + 24*60*60*7;
+                                    $date_start2 = $date_time - 3*60*60;
+                                    $date_over2 = $date_time + 3*60*60;
                                 @endphp  
                                 <span style="color:green;">  
                                 {{ date('Y/m/d', $date_time) }} ({{$week}}) {{ date('H點i分', $date_time) }}
@@ -78,12 +81,60 @@
                                     <br>
                                     <a href="{{ $dating_survey_m }}" target="__blank"><u>約會滿意度調查表(男生用)</u></a>             
                                 @endif
-                                @if(true)
-                                    <!-- <br>
-                                    <button class="btn btn-primary" onclick="dateMsg();">約會訊息表</button>   
-                                    <div class="msg{{$value['id']}}" style="display:none;">
-                                        123
-                                    </div>      -->
+                                @if($now > $date_start2 && $now < $date_over2)
+                                    <div style="margin-top:10px;">對方傳給你的訊息 :</div>
+                                    @if($value['date_msg'] == null || $value['date_msg'] == 'no')
+                                        <div style="color:pink;">無</div>
+                                    @else
+                                        <div style="color:pink;">{{$value['date_msg']}}</div>
+                                    @endif
+                                    <div style="margin-top:10px;">無法準時到達給對方的訊息 :</div>
+                                    <form action="/date/date_msg_post" method="post" id="date_msg_form">
+                                        @csrf
+                                        <input type="hidden" name="table_id" value="{{ $value['id'] }}">
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="msg0">
+                                                    <input type="radio" class="form-check-input" id="msg0" name="msg" value="no">
+                                                    無
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="msg1">
+                                                    <input type="radio" class="form-check-input" id="msg1" name="msg" value="會晚到5分鐘左右">
+                                                    會晚到5分鐘左右
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="msg2">
+                                                    <input type="radio" class="form-check-input" id="msg2" name="msg" value="會晚到10分鐘左右">
+                                                    會晚到10分鐘左右
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="msg3">
+                                                    <input type="radio" class="form-check-input" id="msg3" name="msg" value="會晚到15分鐘左右">
+                                                    會晚到15分鐘左右
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="msg4">
+                                                    <input type="radio" class="form-check-input" id="msg4" name="msg" value="會晚到30分鐘左右">
+                                                    會晚到30分鐘左右
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label" for="msg5">
+                                                    <input type="radio" class="form-check-input" id="msg5" name="msg" value="碰到緊急情況無法到達">
+                                                    碰到緊急情況無法到達
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                        style="background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">
+                                            送出
+                                        </button>
+                                    </form>
                                 @endif
                             </h5>
                         @endif
@@ -96,7 +147,13 @@
 </div>
 <br><br>
 
-<script>
+<script>  
+$(document).ready(function(){
+    $("#date_msg_form").on('submit', function(e){
+        alert('訊息已送出');
+    });
+});
+
 </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ use App\Models\VideoDate;
 use App\Models\AppointmentList;
 use App\Models\MemberLoginLog;
 use App\Models\AppointmentRegistration;
+use App\Models\DateMsg;
 use App\Services\PairTimeService;
 use Session;
 use Validator;
@@ -306,6 +307,7 @@ class DateController extends Controller
             return redirect('/date/login');
         }
         $username = Session::get('username');
+        $gender = MemberData::where('username', $username)->pluck('gender')->first();
         $data = [];
         $result = AppointmentRegistration::where('username', $username)
                             ->whereNotNull('appointment_respond')
@@ -322,9 +324,52 @@ class DateController extends Controller
             $result2[$key]['appointment_user'] = $value['username'];
         }  
 
-        $data['result'] = array_merge($result,$result2);
+        $res = array_merge($result,$result2);
+
+        foreach($res as $key => $value){
+            if($gender == 'm'){
+                $msg = DateMsg::where('table_id', $value['id'])->pluck('f_msg')->first();
+            }else{
+                $msg = DateMsg::where('table_id', $value['id'])->pluck('m_msg')->first();
+            }
+            $res[$key]['date_msg'] = $msg;
+        }  
+
+        $data['result'] = $res;
 
         return view('date.show_result', [ 'data' => $data ]);
+    }
+
+    public function date_msg_post(Request $request)
+    {
+        if(!Session::has('username')){
+            return redirect('/date/login');
+        }
+        $username = Session::get('username');
+        $input = $request->input();
+        $gender = MemberData::where('username', $username)->pluck('gender')->first();
+        if($gender == 'm'){
+            DateMsg::updateOrCreate(
+                [
+                    'table_id' => $input['table_id'],
+                ]
+                ,
+                [
+                    'm_msg' => $input['msg'],
+                ]
+            );
+        }else{
+            DateMsg::updateOrCreate(
+                [
+                    'table_id' => $input['table_id'],
+                ],
+                [
+                    'f_msg' => $input['msg'],
+                ]
+            );
+        }
+    
+        return redirect('/date/show_result');
     }
 
     public function restaurant()
@@ -359,7 +404,7 @@ class DateController extends Controller
     {
         $w = date('w',time());
         //$H = date('H',time());
-        return true;
+      
         if($type == 1){
             //星期一和星期二
             if($w == 1 || $w == 2){
