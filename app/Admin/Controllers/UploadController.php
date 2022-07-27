@@ -21,13 +21,12 @@ class UploadController extends Controller
         $content->description('upload file');
         $data = [];
 
-        //$reader = new Xlsx();
-        //echo storage_path('app/uploads/dating_survey_m.xlsx');
+        // $reader = new Xlsx();
         // $spreadsheet = $reader->load(storage_path('app/uploads/dating_survey_m.xlsx'));
         // $sheet = $spreadsheet->getSheet(0);
         // $cellCollection = $sheet->getCellCollection();
         // $column = $cellCollection->getHighestRowAndColumn();
-        // echo $sheet->getCell('A1')->getValue();
+        //echo $sheet->getCell('A1')->getValue();
 
         $content->view('admin.upload', ['data' => $data]);
 

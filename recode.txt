@@ -6,8 +6,8 @@ composer require encore/laravel-admin:1.*
 php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
 php artisan admin:install
 
-chmod -R 777 ilovetwo
-cp .env.example .env
+chmod -R 777 ilovetwo3
+cp .env.example .env    
 建立.env 調整APP_URL和Database
 composer install
 php artisan key:generate

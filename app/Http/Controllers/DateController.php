@@ -404,7 +404,7 @@ class DateController extends Controller
     {
         $w = date('w',time());
         //$H = date('H',time());
-      
+        return true;
         if($type == 1){
             //星期一和星期二
             if($w == 1 || $w == 2){

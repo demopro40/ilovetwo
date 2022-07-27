@@ -81,7 +81,7 @@
                                     <br>
                                     <a href="{{ $dating_survey_m }}" target="__blank"><u>約會滿意度調查表(男生用)</u></a>             
                                 @endif
-                                @if($now > $date_start2 && $now < $date_over2)
+                                @if($now > $date_start2 && $now < $date_over2 || true)
                                     <div style="margin-top:10px;">對方傳給你的訊息 :</div>
                                     @if($value['date_msg'] == null || $value['date_msg'] == 'no')
                                         <div style="color:pink;">無</div>

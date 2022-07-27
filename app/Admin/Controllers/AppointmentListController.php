@@ -32,7 +32,7 @@ class AppointmentListController extends AdminController
         $grid->column('username', __('會員名稱'))->sortable();
         $grid->column('appointment_username', __('排約會員'));
         $grid->column('appointment_user_new', __('要推播的會員'));
-        $grid->column('appointment_user_latest', __('最新推播的會員'));
+        //$grid->column('appointment_user_latest', __('最新推播的會員'));
         $grid->column('appointment_user_excluded', __('排除的會員'));
 
         //$grid->disableCreateButton();
@@ -48,6 +48,12 @@ class AppointmentListController extends AdminController
                 //$batch->disableDelete();
             });
         });
+
+        $grid->filter(function($filter){
+            $filter->disableIdFilter();
+            $filter->equal('username', '會員名稱');
+        });
+
         // $html = <<<html
         //     <style>
         //         .add-member{
@@ -120,10 +126,10 @@ class AppointmentListController extends AdminController
 
         $form->text('appointment_username', __('排約會員'));
         $form->text('appointment_user_new', __('要推播的會員'));
-        $form->text('appointment_user_latest', __('最新推播的會員'));
+        //$form->text('appointment_user_latest', __('最新推播的會員'));
         $form->text('appointment_user_excluded', __('排除的會員'))->help('輸入會員名稱，兩個以上需加頓號(、)當間隔，例 : sam、luke');
 
-        // $form->ignore([]);
+        //$form->ignore([]);
 
         //$form->saving(function (Form $form) {
 

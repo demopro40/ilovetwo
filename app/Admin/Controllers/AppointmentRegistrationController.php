@@ -35,7 +35,21 @@ class AppointmentRegistrationController extends AdminController
         $grid->column('chat_option', __('聊天選項'));
         $grid->column('restaurant', __('餐廳地點'));
         $grid->column('datetime', __('排約時段'));
-        $grid->column('appointment_respond', __('排約對象回應'));
+        $grid->column('appointment_respond', __('排約對象回應'))->display(function($data){
+            if($data == "noTime"){
+                $result = "noTime(時間無法配合，要另約時間)";
+                return $result;
+            }
+            if($data == "delete" ){
+                $result = "delete(拒絕邀約)";
+                return $result;
+            }
+            if($data == "noSel" ){
+                $result = "noSel(暫不回應)";
+                return $result;
+            }
+            return $data;
+        });
         $grid->column('appointment_result', __('排約結果'))->display(function($data){
 
             if($data == "noTime"){

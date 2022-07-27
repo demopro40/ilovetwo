@@ -20,4 +20,5 @@ Route::group([
     $router->resource('/VideoDate','VideoDateController');
     $router->get('/Upload','UploadController@index');
     $router->post('/UploadPost','UploadController@upload_post');
+    $router->get('/Chart','ChartController@index');
 });
