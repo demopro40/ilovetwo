@@ -315,7 +315,6 @@ class DBSeeder extends Seeder
                 'permission'=>null,
             ],
         ];
-       
         foreach($ary as $value){
             DB::table('admin_menu')->insert(
                 [
@@ -328,7 +327,6 @@ class DBSeeder extends Seeder
                 ]
             );
         }
-
 
         \DB::insert("
         INSERT INTO `appointment_registrations` (`id`, `username`, `type`, `chat_option`, `restaurant`, `datetime`, `appointment_user`, `appointment_respond`, `appointment_result`, `created_at`, `updated_at`) VALUES
@@ -346,6 +344,5 @@ class DBSeeder extends Seeder
         (2, 'Lisa', 'luke、sam', '', 'luke、sam', NULL, '2022-07-23 12:26:24', '2022-07-23 12:26:34');        
         ");
 
-        
     }
 }
