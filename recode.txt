@@ -7,6 +7,7 @@ php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
 php artisan admin:install
 
 chmod -R 777 ilovetwo3
+chmod -R 777 storage
 cp .env.example .env    
 建立.env 調整APP_URL和Database
 composer install
