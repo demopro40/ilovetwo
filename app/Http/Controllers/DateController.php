@@ -99,20 +99,23 @@ class DateController extends Controller
 
         // //會員資料連結顯示
         $check = MemberData::where('username', $username)->get(['gender','plan'])->toArray();
-        if($check[0]['gender'] == 'm'){
-            if($check[0]['plan'] == 'G' || $check[0]['plan'] == 'C' || $check[0]['plan'] == 'D'){
-                $data['show'] = 'd';
-            }else{
-                $data['show'] = 's';
+        if(!empty($check)){
+            if($check[0]['gender'] == 'm'){
+                if($check[0]['plan'] == 'G' || $check[0]['plan'] == 'C' || $check[0]['plan'] == 'D'){
+                    $data['show'] = 'd';
+                }else{
+                    $data['show'] = 's';
+                }
+            }
+            if($check[0]['gender'] == 'f'){
+                if($check[0]['plan'] == 'D'){
+                    $data['show'] = 'd';
+                }else{
+                    $data['show'] = 's';
+                }
             }
         }
-        if($check[0]['gender'] == 'f'){
-            if($check[0]['plan'] == 'D'){
-                $data['show'] = 'd';
-            }else{
-                $data['show'] = 's';
-            }
-        }
+        
 
         return view('date.data', [ 'data' => $data ]);
     }
@@ -259,18 +262,20 @@ class DateController extends Controller
 
         //會員資料連結顯示
         $check = MemberData::where('username', $username)->get(['gender','plan'])->toArray();
-        if($check[0]['gender'] == 'm'){
-            if($check[0]['plan'] == 'G' || $check[0]['plan'] == 'C' || $check[0]['plan'] == 'D'){
-                $data['show'] = 'd';
-            }else{
-                $data['show'] = 's';
+        if(!empty($check)){
+            if($check[0]['gender'] == 'm'){
+                if($check[0]['plan'] == 'G' || $check[0]['plan'] == 'C' || $check[0]['plan'] == 'D'){
+                    $data['show'] = 'd';
+                }else{
+                    $data['show'] = 's';
+                }
             }
-        }
-        if($check[0]['gender'] == 'f'){
-            if($check[0]['plan'] == 'D'){
-                $data['show'] = 'd';
-            }else{
-                $data['show'] = 's';
+            if($check[0]['gender'] == 'f'){
+                if($check[0]['plan'] == 'D'){
+                    $data['show'] = 'd';
+                }else{
+                    $data['show'] = 's';
+                }
             }
         }
 
