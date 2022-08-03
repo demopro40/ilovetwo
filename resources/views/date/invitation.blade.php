@@ -81,7 +81,7 @@
                                 @foreach($data['restaurant'] as $value)
                                     <option value="{{ $value['place'] }}">{{ $value['place'] }}</option>
                                 @endforeach
-                                <option>有其他想約會的餐廳可主動通知顧問</option>
+                                <!-- <option>有其他想約會的餐廳可主動通知顧問</option> -->
                             </select>
                         </div>
 
