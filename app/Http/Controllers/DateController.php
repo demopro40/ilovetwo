@@ -345,10 +345,13 @@ class DateController extends Controller
         foreach($res as $key => $value){
             if($gender == 'm'){
                 $msg = DateMsg::where('table_id', $value['id'])->pluck('f_msg')->first();
+                $msg2 = DateMsg::where('table_id', $value['id'])->pluck('m_msg')->first();
             }else{
                 $msg = DateMsg::where('table_id', $value['id'])->pluck('m_msg')->first();
+                $msg2 = DateMsg::where('table_id', $value['id'])->pluck('f_msg')->first();
             }
             $res[$key]['date_msg'] = $msg;
+            $res[$key]['date_msg2'] = $msg2;
         }  
 
         $data['result'] = $res;

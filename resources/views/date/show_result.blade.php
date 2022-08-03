@@ -39,12 +39,12 @@
                 @if($value['appointment_result'] !== 'otherSide')
                     <div class="col-md-4">
                         <h3>{{ $value['appointment_user'] }}</h3>
-                        <h5>約會類型 : {{ $value['type'] }}</h5>
+                        <h5>約會類型 : <span style="color:white;">{{ $value['type'] }}</span></h5>
                         @if($value['type'] == '餐廳約會')
-                            <h5>餐廳地點 : {{ $value['restaurant'] }}</h5>
+                            <h5>餐廳地點 : <span style="color:white;">{{ $value['restaurant'] }}</span></h5>
                         @endif
                         @if($value['type'] == '視訊約會')
-                            <h5>視訊方式 : {{ $value['chat_option'] }}</h5>
+                            <h5>視訊方式 : <span style="color:white;">{{ $value['chat_option'] }}</span></h5>
                         @endif
                         @if($value['message'] !== null)
                             <h5>排約結果 : <br><span style="color:blue;">{{ $value['message'] }}</span></h5>
@@ -78,7 +78,7 @@
                                     $date_start2 = $date_time - 3*60*60;
                                     $date_over2 = $date_time + 3*60*60;
                                 @endphp  
-                                <span style="color:green;">  
+                                <span style="color:white;">  
                                 {{ date('Y/m/d', $date_time) }} ({{$week}}) {{ date('H點i分', $date_time) }}
                                 </span>
                                 @if($now > $date_start && $now < $date_over)
@@ -89,19 +89,20 @@
                                 @endif
                                 @if($now > $date_start2 && $now < $date_over2 || true)
                                     <div style="margin-top:10px;">對方傳給你的訊息 :</div>
-                                    @if($value['date_msg'] == null || $value['date_msg'] == 'no')
+                                    @if($value['date_msg'] == null || $value['date_msg'] == '無')
                                         <div style="color:pink;">無</div>
                                     @else
                                         <div style="color:pink;">{{$value['date_msg']}}</div>
                                     @endif
                                     <div style="margin-top:10px;">給對方的訊息 :</div>
+                                    <div style="color:pink;">{{$value['date_msg2']}}</div>
                                     <form action="/date/date_msg_post" method="post" id="date_msg_form">
                                         @csrf
                                         <input type="hidden" name="table_id" value="{{ $value['id'] }}">
                                         <div class="form-group">
                                             <div class="form-check">
-                                                <label class="form-check-label" for="msg0">
-                                                    <input type="radio" class="form-check-input" id="msg0" name="msg" value="no">
+                                                <label class="form-check-label" for="msg0{{ $value['id'] }}">
+                                                    <input type="radio" class="form-check-input" id="msg0{{ $value['id'] }}" name="msg{{ $value['id'] }}" value="無">
                                                     無
                                                 </label>
                                             </div>
