@@ -23,6 +23,7 @@ class CreateAppointmentRegistrationsTable extends Migration
             $table->string('appointment_user');
             $table->string('appointment_respond')->nullable();
             $table->string('appointment_result')->nullable();
+            $table->string('message')->nullable();
             $table->timestamps();
         });
     }

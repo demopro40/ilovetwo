@@ -46,7 +46,9 @@
                         @if($value['type'] == '視訊約會')
                             <h5>視訊方式 : {{ $value['chat_option'] }}</h5>
                         @endif
-                        @if($value['appointment_result'] == null || $value['appointment_result'] == 'noSel')
+                        @if($value['message'] !== null)
+                            <h5>排約結果 : <br><span style="color:blue;">{{ $value['message'] }}</span></h5>
+                        @elseif($value['appointment_result'] == null || $value['appointment_result'] == 'noSel')
                             <h5>排約結果 : <br><span style="color:red;">未回應</span></h5>
                         @elseif($value['appointment_result'] == 'delete')
                             <h5>排約結果 : <br><span style="color:red;">對方拒絕邀約</span></h5>
@@ -67,8 +69,12 @@
                                 @php
                                     $now = strtotime(date('Y-m-d H:i:s'));
                                     $date_time = strtotime($value['appointment_result']);
+
+                                    //約會滿意度調查表
                                     $date_start = $date_time + 3*60*60;
                                     $date_over = $date_time + 24*60*60*7;
+
+                                    //約會訊息表
                                     $date_start2 = $date_time - 3*60*60;
                                     $date_over2 = $date_time + 3*60*60;
                                 @endphp  
@@ -76,10 +82,10 @@
                                 {{ date('Y/m/d', $date_time) }} ({{$week}}) {{ date('H點i分', $date_time) }}
                                 </span>
                                 @if($now > $date_start && $now < $date_over)
-                                    <br>
+                                    <!-- <br>
                                     <a href="{{ $dating_survey_f }}" target="__blank"><u>約會滿意度調查表(女生用)</u></a>
                                     <br>
-                                    <a href="{{ $dating_survey_m }}" target="__blank"><u>約會滿意度調查表(男生用)</u></a>             
+                                    <a href="{{ $dating_survey_m }}" target="__blank"><u>約會滿意度調查表(男生用)</u></a>              -->
                                 @endif
                                 @if($now > $date_start2 && $now < $date_over2 || true)
                                     <div style="margin-top:10px;">對方傳給你的訊息 :</div>
@@ -88,7 +94,7 @@
                                     @else
                                         <div style="color:pink;">{{$value['date_msg']}}</div>
                                     @endif
-                                    <div style="margin-top:10px;">無法準時到達給對方的訊息 :</div>
+                                    <div style="margin-top:10px;">給對方的訊息 :</div>
                                     <form action="/date/date_msg_post" method="post" id="date_msg_form">
                                         @csrf
                                         <input type="hidden" name="table_id" value="{{ $value['id'] }}">
@@ -100,32 +106,32 @@
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <label class="form-check-label" for="msg1">
-                                                    <input type="radio" class="form-check-input" id="msg1" name="msg" value="會晚到5分鐘左右">
+                                                <label class="form-check-label" for="msg1{{ $value['id'] }}">
+                                                    <input type="radio" class="form-check-input" id="msg1{{ $value['id'] }}" name="msg{{ $value['id'] }}" value="會晚到5分鐘左右">
                                                     會晚到5分鐘左右
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <label class="form-check-label" for="msg2">
-                                                    <input type="radio" class="form-check-input" id="msg2" name="msg" value="會晚到10分鐘左右">
+                                                <label class="form-check-label" for="msg2{{ $value['id'] }}">
+                                                    <input type="radio" class="form-check-input" id="msg2{{ $value['id'] }}" name="msg{{ $value['id'] }}" value="會晚到10分鐘左右">
                                                     會晚到10分鐘左右
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <label class="form-check-label" for="msg3">
-                                                    <input type="radio" class="form-check-input" id="msg3" name="msg" value="會晚到15分鐘左右">
+                                                <label class="form-check-label" for="msg3{{ $value['id'] }}">
+                                                    <input type="radio" class="form-check-input" id="msg3{{ $value['id'] }}" name="msg{{ $value['id'] }}" value="會晚到15分鐘左右">
                                                     會晚到15分鐘左右
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <label class="form-check-label" for="msg4">
-                                                    <input type="radio" class="form-check-input" id="msg4" name="msg" value="會晚到30分鐘左右">
+                                                <label class="form-check-label" for="msg4{{ $value['id'] }}">
+                                                    <input type="radio" class="form-check-input" id="msg4{{ $value['id'] }}" name="msg{{ $value['id'] }}" value="會晚到30分鐘左右">
                                                     會晚到30分鐘左右
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <label class="form-check-label" for="msg5">
-                                                    <input type="radio" class="form-check-input" id="msg5" name="msg" value="碰到緊急情況無法到達">
+                                                <label class="form-check-label" for="msg5{{ $value['id'] }}">
+                                                    <input type="radio" class="form-check-input" id="msg5{{ $value['id'] }}" name="msg{{ $value['id'] }}" value="碰到緊急情況無法到達">
                                                     碰到緊急情況無法到達
                                                 </label>
                                             </div>

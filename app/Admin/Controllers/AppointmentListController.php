@@ -29,9 +29,33 @@ class AppointmentListController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new AppointmentList);
-        $grid->column('username', __('會員名稱'))->sortable();
-        $grid->column('appointment_username', __('排約會員'));
-        $grid->column('appointment_user_new', __('要推播的會員'));
+        $grid->column('username', __('會員名稱'))->display(function($data){
+            $result = '';
+            $val = MemberData::where('username', $data)->get(['username','live_place','birth_place'])->toArray();
+            $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")";
+            return $result;
+        });
+        $grid->column('appointment_username', __('排約會員'))->display(function($data){
+            // $ary = explode('、', $data);
+            // $result = '';
+            // foreach($ary as $value){
+            //     $val = MemberData::where('username', $value)->get(['username','live_place','birth_place'])->toArray();
+            //     $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")"."、";
+            // }
+            // return $result;
+            return $data;
+        });
+        $grid->column('appointment_user_new', __('要推播的會員'))->display(function($data){
+            $ary = explode('、', $data);
+            $result = '';
+            foreach($ary as $value){
+                $val = MemberData::where('username', $value)->get(['username','live_place','birth_place'])->toArray();
+                if(!empty($val)){
+                    $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")"."、";
+                }
+            }
+            return $result;
+        });
         //$grid->column('appointment_user_latest', __('最新推播的會員'));
         $grid->column('appointment_user_excluded', __('排除的會員'));
 
@@ -45,7 +69,7 @@ class AppointmentListController extends AdminController
         });
         $grid->tools(function ($tools) {
             $tools->batch(function ($batch) {
-                //$batch->disableDelete();
+                $batch->disableDelete();//批次刪除
             });
         });
 
@@ -77,7 +101,7 @@ class AppointmentListController extends AdminController
         $grid->batchActions(function ($batch) { //php artisan admin:action Member\AddMember --name="新增推播" --grid-batch    
             $batch->add(new AddMember());
             $batch->add(new PushMember());
-            $batch->add(new BackMember());
+            //$batch->add(new BackMember());
         });
         // $grid->tools(function (Grid\Tools $tools) { //php artisan admin:action Member\AddMember --name="新增推播"   
         //     $tools->append(new AddMember());

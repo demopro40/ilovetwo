@@ -53,52 +53,35 @@ class AppointmentRegistrationController extends AdminController
         $grid->column('appointment_result', __('排約結果'))->display(function($data){
 
             if($data == "noTime"){
-                $result = "以上時間無法配合，要另約時間";
+                $result = "noTime(時間無法配合，要另約時間)";
                 return $result;
             }
             if($data == "delete" ){
-                $result = "對方拒絕邀約";
+                $result = "delete(拒絕邀約)";
                 return $result;
             }
             if($data == "noSel" ){
-                $result = "暫不回應";
+                $result = "noSel(暫不回應)";
                 return $result;
             }
             if($data == "otherSide"){
                 return $data;
             }
-            if($this->appointment_respond == null){
-                //$result = "未回應";
-                $result = NULL;
-                return $result;
+            if($data == NULL){
+                return NULL;
             }
-            if($this->appointment_respond != null && $data == null){
-                //$result = "等待配對結果";
-                $result = NULL;
-                return $result;
-            }
-
-            $data = explode("、", $data);
-            // $week = date('w',strtotime($data[0])); 
-            // if($week == 0) $week = '日';
-            // if($week == 1) $week = '一';
-            // if($week == 2) $week = '二';
-            // if($week == 3) $week = '三';
-            // if($week == 4) $week = '四';
-            // if($week == 5) $week = '五';
-            // if($week == 6) $week = '六';
-                                                       
+            
+            $data = explode("、", $data);                       
             if($this->type == '視訊約會'){
-                //$result = date('Y/m/d', strtotime($data[0])).($week).date('H點i分', strtotime($data[0])).'~'.date('H點i分', strtotime($data[0])+1*30*60);
                 $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+1*30*60);
             }
             if($this->type == '餐廳約會'){
-                //$result = date('Y/m/d', strtotime($data[0])).($week).date('H點i分', strtotime($data[0])).'~'.date('H點i分', strtotime($data[0])+2*60*60);
                 $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+2*60*60);
             }
 
             return $result;
         });
+        $grid->column('message', __('訊息'));
         // $grid->column('created_at', __('建立時間'));
         // $grid->column('updated_at', __('更新時間'));
 
@@ -172,7 +155,8 @@ class AppointmentRegistrationController extends AdminController
         $form->text('restaurant', __('餐廳地點'));
         $form->text('datetime', __('選擇的時間'));
         $form->text('appointment_respond', __('排約對象回應'));
-        $form->text('appointment_result', __('排約結果'))->help("排約時間要按照格式 例:2022-05-11 20:00:00、2022-05-12 20:00:00");
+        $form->text('appointment_result', __('排約結果'));
+        $form->text('message', __('訊息'));
         // $form->display('created_at', __('建立時間'));
         // $form->display('updated_at', __('更新時間'));
         $form->tools(function (Form\Tools $tools) {

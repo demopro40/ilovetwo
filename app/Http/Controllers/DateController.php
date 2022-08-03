@@ -93,11 +93,22 @@ class DateController extends Controller
         $data['username'] = $username;
 
         //推播對象
+        $result_ary = [];
         $push_member = AppointmentList::where('username', $username)->pluck('appointment_username')->first();
         $push_member = explode('、', $push_member);
-        $data['push_data'] = MemberData::whereIn('username', $push_member)->get(['username', 'gender', 'data_url', 'data_url_simple', 'plan'])->toArray();
 
-        // //會員資料連結顯示
+        foreach($push_member as  $key => $value){
+            $res = MemberData::where('username', $value)
+                                ->get(['username', 'gender', 'data_url', 'data_url_simple', 'plan'])
+                                ->toArray();
+            if(!empty($res)){
+                $result_ary[$key] = $res[0];        
+            }                                
+        }
+                      
+        $data['push_data'] = array_reverse($result_ary);
+
+        //會員資料連結顯示
         $check = MemberData::where('username', $username)->get(['gender','plan'])->toArray();
         if(!empty($check)){
             if($check[0]['gender'] == 'm'){
@@ -353,6 +364,7 @@ class DateController extends Controller
         $username = Session::get('username');
         $input = $request->input();
         $gender = MemberData::where('username', $username)->pluck('gender')->first();
+        $str = 'msg'.$input['table_id'];
         if($gender == 'm'){
             DateMsg::updateOrCreate(
                 [
@@ -360,7 +372,7 @@ class DateController extends Controller
                 ]
                 ,
                 [
-                    'm_msg' => $input['msg'],
+                    'm_msg' => $input[$str],
                 ]
             );
         }else{
@@ -369,7 +381,7 @@ class DateController extends Controller
                     'table_id' => $input['table_id'],
                 ],
                 [
-                    'f_msg' => $input['msg'],
+                    'f_msg' => $input[$str],
                 ]
             );
         }
@@ -408,7 +420,7 @@ class DateController extends Controller
     private function checkDate($type)
     {
         $w = date('w',time());
-        //$H = date('H',time());
+        $H = date('H',time());
         return true;
         if($type == 1){
             //星期一和星期二
@@ -421,8 +433,8 @@ class DateController extends Controller
                 return true;
             }
         }elseif($type == 3){
-            //星期五的六點之後 或 週六 或 週日
-            if($w == 6 || $w == 0){
+            //星期五晚上七點之後 或 週六 或 週日
+            if(($w == 5 && $H >= 19 ) || $w == 6 || $w == 0){
                 return true;
             }
         }else{
@@ -432,30 +444,6 @@ class DateController extends Controller
 
     public function test()
     {
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-
-        //讀取項目根目錄下data文件夾裏的test.xlsx 並返回表格對象
-        $spreadsheet = $reader->load(storage_path('/app/uploads/dating_survey_m.xlsx'));
-
-        //讀取第一個表
-        $sheet = $spreadsheet->getSheet(0);
-
-        //獲取單元格的集合
-        $cellCollection = $sheet->getCellCollection();
-
-        //獲取具有單元格記錄的工作表的最高列和最高行。
-        $column = $cellCollection->getHighestRowAndColumn();
-
-        //內容爲值存入數組
-        $data = array();
-
-        for($i = 1; $i <= $column['row']; $i++){//行
-            for($j = 'A'; $j <= $column['column']; $j++){//列
-                $key = $j.$i;
-                $value = $sheet->getCell($key)->getValue();
-                $data[$key] = $value;
-            }
-        }
-        //dump($data);
+        
     }
 }
