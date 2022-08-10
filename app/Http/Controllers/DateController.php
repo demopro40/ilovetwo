@@ -12,19 +12,16 @@ use App\Models\MemberLoginLog;
 use App\Models\AppointmentRegistration;
 use App\Models\DateMsg;
 use App\Services\PairTimeService;
+use App\Services\ExcelService;
 use Session;
 use Validator;
 
-
-//use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 class DateController extends Controller
 {
-    public function __construct(PairTimeService $pairTimeService)
+    public function __construct(PairTimeService $pairTimeService, ExcelService $excelService)
     {
         $this->pairTimeService = $pairTimeService;
+        $this->excelService = $excelService;
     }
 
     public function login()
@@ -447,6 +444,6 @@ class DateController extends Controller
 
     public function test()
     {
-        
+        $this->excelService->start();
     }
 }

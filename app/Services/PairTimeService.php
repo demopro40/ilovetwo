@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
 
-use App\Repositories\PairTimeRepository;
 use App\Models\AppointmentRegistration;
 use App\Models\MemberData;
 
