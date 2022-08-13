@@ -95,9 +95,9 @@
                                 <label>
                                     <input type="checkbox" class="del{{$key+1}}" item={{$key+1}} onClick="delUser(event,this);" name="respond{{$key}}[]"  value="delete">
                                     <span>沒有意願排約</span>
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScysr88Bo35rnkzy-5fAtrEfy9JSECGsHkgiXYHjjrQzaWP3A/viewform" target="__blank"><u>「拒絕邀約」調查表(女生用)</u></a>
+                                    <!-- <a href="https://docs.google.com/forms/d/e/1FAIpQLScysr88Bo35rnkzy-5fAtrEfy9JSECGsHkgiXYHjjrQzaWP3A/viewform" target="__blank"><u>「拒絕邀約」調查表(女生用)</u></a>
                                     
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSee6YEBIOyGu3LnRzAqTIjYtPWOD1QkqumWMGC3yJDYZ-YLGQ/viewform" target="__blank"><u>「拒絕邀約」調查表(男生用)</u></a>
+                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSee6YEBIOyGu3LnRzAqTIjYtPWOD1QkqumWMGC3yJDYZ-YLGQ/viewform" target="__blank"><u>「拒絕邀約」調查表(男生用)</u></a> -->
                                 </label>
                                 <br>
                                 <label>

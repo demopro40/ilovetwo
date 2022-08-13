@@ -115,7 +115,7 @@ class DB2Seeder extends Seeder
 
         \DB::insert("
         INSERT INTO `admin_permissions` (`name`, `slug`, `http_method`, `http_path`) VALUES
-        ('顧問1', '顧問', '', '/MemberData\n/AppointmentList\n/AppointmentRegistration\n/Restaurant\n/RestaurantDate\n/VideoDate');        
+        ('顧問1', '顧問', '', '/MemberData*\n/AppointmentList*\n/AppointmentRegistration*\n/Restaurant*\n/RestaurantDate*\n/VideoDate*');        
         ");
 
         \DB::insert("
