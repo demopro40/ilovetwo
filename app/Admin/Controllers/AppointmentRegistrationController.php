@@ -76,7 +76,7 @@ class AppointmentRegistrationController extends AdminController
                 $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+1*30*60);
             }
             if($this->type == '餐廳約會'){
-                $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+2*60*60);
+                $result = date('Y-m-d H:i:s', strtotime($data[0])).'~'.date('H:i:s', strtotime($data[0])+1*60*60);
             }
 
             return $result;

@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use Illuminate\Database\Seeder\AdminSeeder;
+use Illuminate\Database\Seeder\UserSeeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**

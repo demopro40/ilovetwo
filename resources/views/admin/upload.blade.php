@@ -11,8 +11,8 @@
 		</div>
 		<div class="col-md-9">
 			<ul>
-				<li>約會調查表上傳(男生版)檔名請改成 dating_survey_m.xlsx </li>
-				<li>約會調查表上傳(女生版)檔名請改成 dating_survey_f.xlsx </li>
+				<!-- <li>上傳排約資料表檔名請改成 data.xlsx</li> -->
+				 
 			</ul>
 		</div>
 	</div>

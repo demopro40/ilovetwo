@@ -11,22 +11,21 @@ use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use App\Services\ExcelService;
 
 class UploadController extends Controller
 {
+
+    public function __construct(ExcelService $excel_service)
+    {
+        $this->excel_service = $excel_service;
+    }
     
     public function index(Content $content)
     {
         $content->title('上傳檔案');
         $content->description('upload file');
         $data = [];
-
-        // $reader = new Xlsx();
-        // $spreadsheet = $reader->load(storage_path('app/uploads/dating_survey_m.xlsx'));
-        // $sheet = $spreadsheet->getSheet(0);
-        // $cellCollection = $sheet->getCellCollection();
-        // $column = $cellCollection->getHighestRowAndColumn();
-        //echo $sheet->getCell('A1')->getValue();
 
         $content->view('admin.upload', ['data' => $data]);
 
@@ -70,11 +69,16 @@ class UploadController extends Controller
 
     private function check($originalName)
     {
-        if($originalName == 'dating_survey_m.xlsx'){
+        if($originalName == 'data.xlsx'){
 
-        }elseif($originalName == 'dating_survey_f.xlsx'){
+            return true;
+
+        }elseif($originalName == 'data222222222222222222222222222.xlsx'){
+
+            return true;
 
         }else{
+
             echo '上傳檔案名稱錯誤';
             exit;
         }

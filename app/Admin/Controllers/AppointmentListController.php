@@ -32,6 +32,9 @@ class AppointmentListController extends AdminController
         $grid->column('username', __('會員名稱'))->display(function($data){
             $result = '';
             $val = MemberData::where('username', $data)->get(['username','live_place','birth_place'])->toArray();
+            if(empty($val)){
+                return $data;
+            }
             $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")";
             return $result;
         });

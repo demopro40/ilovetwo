@@ -28,7 +28,7 @@ class RestaurantDateController extends AdminController
 
         //$grid->column('id', __('ID'))->sortable();
         $grid->column('datetime', __('餐廳約會時間'))->display(function($datetime){
-            return date('Y/m/d H:i', strtotime($datetime)).' ~ '.date('Y/m/d H:i', strtotime($datetime)+2*60*60);
+            return date('Y/m/d H:i', strtotime($datetime)).' ~ '.date('Y/m/d H:i', strtotime($datetime)+1*60*60);
         });
    
         // $grid->column('created_at', __('建立時間'));

@@ -60,7 +60,7 @@
                                                 if($week == 5) $week = '五';
                                                 if($week == 6) $week = '六';
                                             @endphp
-                                            {{ date('Y/m/d', strtotime($val)) }} ({{$week}}) {{ date('H點i分', strtotime($val)) }} ~ {{ date('H點i分', strtotime($val)+2*60*60) }}
+                                            {{ date('Y/m/d', strtotime($val)) }} ({{$week}}) {{ date('H點i分', strtotime($val)) }} ~ {{ date('H點i分', strtotime($val)+1*60*60) }}
                                         </label>
                                     @endforeach
                                 @endif
@@ -130,7 +130,7 @@
                                                         $res = date('Y/m/d', strtotime($val)).'('.$week.')  '.date('H點i分', strtotime($val)).'~'.date('H點i分', strtotime($val)+1*60*30);
                                                     }
                                                     if($value['type'] == '餐廳約會'){
-                                                        $res = date('Y/m/d', strtotime($val)).'('.$week.')  '.date('H點i分', strtotime($val)).'~'.date('H點i分', strtotime($val)+2*60*60);
+                                                        $res = date('Y/m/d', strtotime($val)).'('.$week.')  '.date('H點i分', strtotime($val)).'~'.date('H點i分', strtotime($val)+1*60*60);
                                                     }
                                                     echo $res."<br>";
                                                 }

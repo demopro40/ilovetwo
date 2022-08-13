@@ -124,7 +124,7 @@
                                             if($week == 5) $week = '五';
                                             if($week == 6) $week = '六';
                                         @endphp
-                                        {{ date('Y/m/d', strtotime($value['datetime'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['datetime'])) }} ~ {{ date('H點i分', strtotime($value['datetime'])+2*60*60) }}
+                                        {{ date('Y/m/d', strtotime($value['datetime'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['datetime'])) }} ~ {{ date('H點i分', strtotime($value['datetime'])+1*60*60) }}
                                     </label>
                                 </div>
                                 @endforeach

@@ -16,5 +16,9 @@ php artisan admin:install
 php artisan db:seed
 php artisan serve
 
-
 composer dump-autoload
+php artisan insert:excel 1
+php artisan insert:excel 2
+php artisan insert:excel 4
+php artisan insert:excel 5
+php artisan insert:excel 6

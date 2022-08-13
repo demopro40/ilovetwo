@@ -28,8 +28,8 @@ class MemberDataController extends AdminController
 
         //$grid->column('id', __('ID'))->sortable();
         $grid->column('username', __('會員名稱'));
-        $grid->column('identity', __('身分證'))->sortable();
-        $grid->column('phone', __('手機號'));
+        $grid->column('identity', __('帳號(身分證)'))->sortable();
+        $grid->column('phone', __('密碼(手機號)'));
         $grid->column('email', __('email'));
         $grid->column('gender', __('性別'))->radio([
             'm' => '男',
