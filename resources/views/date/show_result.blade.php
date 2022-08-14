@@ -41,7 +41,9 @@
                         <h3>{{ $value['appointment_user'] }}</h3>
                         <h5>約會類型 : <span style="color:pink;">{{ $value['type'] }}</span></h5>
                         @if($value['type'] == '餐廳約會')
-                            <h5>餐廳地點 : <span style="color:pink;">{{ $value['restaurant'] }}</span></h5>
+                            <h5>餐廳地點 : <span style="color:pink;">{{ $value['restaurant'] }}</span>
+                            (男生訂位完後請通知小編訂位資訊)
+                            </h5>
                         @endif
                         @if($value['type'] == '視訊約會')
                             <h5>視訊方式 : <span style="color:pink;">{{ $value['chat_option'] }}</span></h5>
