@@ -31,9 +31,7 @@
     </div>
   </div>
 </div>
-<br><br>
+<br><br><br><br>
 
-<script>
-</script>
-</body>
-</html>
+
+@include('date.components.footer')

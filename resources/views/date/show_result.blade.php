@@ -161,7 +161,7 @@
         @endif
     </div>
 </div>
-<br><br>
+<br><br><br><br>
 
 <script>  
 $(document).ready(function(){
@@ -175,5 +175,5 @@ function date_msg(id){
 }
 
 </script>
-</body>
-</html>
+
+@include('date.components.footer')

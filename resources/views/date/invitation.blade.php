@@ -154,7 +154,7 @@
                 </div>
         </div>
     </div>
-<br><br>
+<br><br><br><br>
 
 <script>
     $(document).ready(function(){
@@ -215,7 +215,6 @@
         });
     });
   
-    
 </script>
-</body>
-</html>
+
+@include('date.components.footer')

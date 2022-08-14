@@ -157,7 +157,7 @@
             <br>
         </form>
 
-<br><br>
+<br><br><br><br>
 
 <script>
     function getTime(e){
@@ -207,5 +207,5 @@
         }
     }
 </script>
-</body>
-</html>
+
+@include('date.components.footer')
