@@ -45,7 +45,7 @@
                             <h5>選擇約會形式:</h5>
                             <div class="form-check-inline">
                                 <label class="form-check-label" for="type2">
-                                    <input type="radio" class="form-check-input" id="type2" name="type" value="type2">餐廳約會
+                                    <input type="radio" class="form-check-input" id="type2" name="type" value="type2" checked >餐廳約會
                                 </label>
                             </div>
                             <div class="form-check-inline">
@@ -159,8 +159,8 @@
 <script>
     $(document).ready(function(){
         $("#datetime").hide();
-        $("#datetime2").hide();
-        $("#restaurant").hide();
+        //$("#datetime2").hide();
+        //$("#restaurant").hide();
         $("#chat_option").hide();
         //$("#push_user").hide();
         $("#invitation_form").on('submit', function(e){
