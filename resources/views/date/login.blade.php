@@ -34,12 +34,10 @@
 		  <label for="password">密碼:</label>
 		  <input type="password" class="form-control" id="password" placeholder="輸入密碼" name="password" value="{{old('password')}}" required>
 		</div>
+		<div class="g-recaptcha" data-sitekey="6LcucHghAAAAACxfLrRUDkRhEH6gUclGOBguFemq"></div>
 		<br>
 		<div class="text-center">
-			<button class="g-recaptcha btn btn-primary" 
-			data-sitekey="6Le8YnghAAAAAPvFRHyalEnOBxP9KbIxEUJvZTyD" 
-			data-callback='onSubmit' 
-			data-action='submit'
+			<button class="btn btn-primary" 
 			style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">登入</button>
 		</div>
 	</form>
