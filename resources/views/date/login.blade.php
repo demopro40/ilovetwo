@@ -24,7 +24,7 @@
 			</ul>
 		</div>
 	@endif
-	<form action="/date/login_post" method="post">
+	<form action="/date/login_post" method="post" id="login_form">
 		@csrf
 		<div class="form-group">
 		  <label for="account">帳號:</label>
@@ -34,12 +34,21 @@
 		  <label for="password">密碼:</label>
 		  <input type="password" class="form-control" id="password" placeholder="輸入密碼" name="password" value="{{old('password')}}" required>
 		</div>
+		<button class="g-recaptcha" 
+        data-sitekey="6Le8YnghAAAAAPvFRHyalEnOBxP9KbIxEUJvZTyD" 
+        data-callback='onSubmit' 
+        data-action='submit'>登入</button>
 		<br>
-		<div class="text-center">
+		<!-- <div class="text-center">
 			<button type="submit" class="btn btn-primary"
             style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">登入</button>
-		</div>
+		</div> -->
 	</form>
 </div>
-
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+   function onSubmit(token) {
+     document.getElementById("login_form").submit();
+   }
+ </script>
 @include('date.components.footer')
