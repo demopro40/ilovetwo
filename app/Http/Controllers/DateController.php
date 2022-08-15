@@ -34,6 +34,32 @@ class DateController extends Controller
 
     public function login_post(Request $request)
     {
+        // Google reCAPTCHA 網站密鑰
+        $data['secret'] = env('RECAPTCHA_S');
+        $data['response'] = $request->input('g-recaptcha-response');
+        $ch = curl_init();
+        // 使用CURL驗證
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        $result = curl_exec($ch);
+        curl_close($ch);
+        // 解密
+        $result = json_decode($result, true);
+
+        // 檢查是否通過驗證
+        if ( ! isset($result['success']) || ! $result['success']) {
+            // 驗證失敗
+            Session::flash('error_msg', '驗證失敗');
+            return redirect('/date/login');
+        } else {
+            // 驗證成功
+        
+        }
+        
         $account = $request->input('account');
         $password = $request->input('password');
         $ip_address = $request->ip();
@@ -340,12 +366,14 @@ class DateController extends Controller
         $res = array_merge($result,$result2);
 
         foreach($res as $key => $value){
+            $message = DateMsg::where('table_id', 2)->get()->first()->toArray();
+
             if($gender == 'm'){
-                $msg = DateMsg::where('table_id', $value['id'])->pluck('f_msg')->first();
-                $msg2 = DateMsg::where('table_id', $value['id'])->pluck('m_msg')->first();
+                $msg = $message['f_msg'];
+                $msg2 = $message['m_msg'];
             }else{
-                $msg = DateMsg::where('table_id', $value['id'])->pluck('m_msg')->first();
-                $msg2 = DateMsg::where('table_id', $value['id'])->pluck('f_msg')->first();
+                $msg = $message['m_msg'];
+                $msg2 = $message['f_msg'];
             }
             $res[$key]['date_msg'] = $msg;
             $res[$key]['date_msg2'] = $msg2;
