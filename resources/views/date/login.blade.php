@@ -9,7 +9,7 @@
 <body>
 
 <br><br>
-<div class="container" style="max-width:500px;">
+<div class="container" style="max-width:332px;">
 	<h2 class="text-center"><strong>愛樂Two會員登入</strong></h2>
 	<br>
 	@if(Session::has('error_msg'))
@@ -34,7 +34,7 @@
 		  <label for="password">密碼:</label>
 		  <input type="password" class="form-control" id="password" placeholder="輸入密碼" name="password" value="{{old('password')}}" required>
 		</div>
-		<div class="g-recaptcha" data-sitekey="6LcucHghAAAAACxfLrRUDkRhEH6gUclGOBguFemq"></div>
+		<div class="g-recaptcha" data-sitekey="6LcucHghAAAAACxfLrRUDkRhEH6gUclGOBguFemq" style="margin-top:25px;"></div>
 		<br>
 		<div class="text-center">
 			<button class="btn btn-primary" 
