@@ -51,7 +51,7 @@ class DateController extends Controller
         $result = json_decode($result, true);
 
         // 檢查是否通過驗證
-        if ( ! isset($result['success']) || ! $result['success']) {
+        if ( !isset($result['success']) || !$result['success'] && !env('TEST')) {
             // 驗證失敗
             Session::flash('error_msg', '驗證失敗');
             return redirect('/date/login');
@@ -350,12 +350,12 @@ class DateController extends Controller
         $data = [];
         $result = AppointmentRegistration::where('username', $username)
                             ->whereNotNull('appointment_respond')
-                            ->where('appointment_respond','!=', 'noSel')
+                            ->whereNotIn('appointment_respond', ['noSel'])
                             ->get()
                             ->toArray();
         $result2 = AppointmentRegistration::where('appointment_user', $username)
                             ->whereNotNull('appointment_respond')
-                            ->where('appointment_respond','!=', 'noSel')
+                            ->whereNotIn('appointment_respond', ['noSel'])
                             ->get()
                             ->toArray();  
         foreach($result2 as $key => $value){
@@ -366,18 +366,20 @@ class DateController extends Controller
         $res = array_merge($result,$result2);
 
         foreach($res as $key => $value){
-            $message = DateMsg::where('table_id', 2)->get()->first()->toArray();
-
-            if($gender == 'm'){
-                $msg = $message['f_msg'];
-                $msg2 = $message['m_msg'];
-            }else{
-                $msg = $message['m_msg'];
-                $msg2 = $message['f_msg'];
+            $message = DateMsg::where('table_id', $value['id'])->get()->toArray();
+            if(!empty($message)){
+                if($gender == 'm'){
+                    $msg = $message[0]['f_msg'];
+                    $msg2 = $message[0]['m_msg'];
+                }else{
+                    $msg = $message[0]['m_msg'];
+                    $msg2 = $message[0]['f_msg'];
+                }
             }
-            $res[$key]['date_msg'] = $msg;
-            $res[$key]['date_msg2'] = $msg2;
+            $res[$key]['date_msg'] = $msg ?? '';
+            $res[$key]['date_msg2'] = $msg2 ?? '';
         }  
+
 
         $data['result'] = $res;
 
@@ -395,22 +397,11 @@ class DateController extends Controller
         $str = 'msg'.$input['table_id'];
         if($gender == 'm'){
             DateMsg::updateOrCreate(
-                [
-                    'table_id' => $input['table_id'],
-                ]
-                ,
-                [
-                    'm_msg' => $input[$str],
-                ]
+                ['table_id' => $input['table_id']], ['m_msg' => $input[$str]]
             );
         }else{
             DateMsg::updateOrCreate(
-                [
-                    'table_id' => $input['table_id'],
-                ],
-                [
-                    'f_msg' => $input[$str],
-                ]
+                ['table_id' => $input['table_id']], ['f_msg' => $input[$str]]
             );
         }
     
