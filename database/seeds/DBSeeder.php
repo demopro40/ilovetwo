@@ -269,8 +269,8 @@ class DBSeeder extends Seeder
 
         \DB::insert("
         INSERT INTO `appointment_lists` (`id`, `username`, `appointment_username`, `appointment_user_new`, `appointment_user_latest`, `appointment_user_excluded`, `created_at`, `updated_at`) VALUES
-        (1, 'luke', 'Lisa、愷妤、小榆、JC', '', '小榆、JC', NULL, '2022-07-23 09:09:09', '2022-07-25 09:05:20'),
-        (2, 'Lisa', 'luke、sam', '', 'luke、sam', NULL, '2022-07-23 12:26:24', '2022-07-23 12:26:34');        
+        (1, 'luke', 'Lisa、愷妤、小榆、JC', '', '', NULL, '2022-07-23 09:09:09', '2022-07-25 09:05:20'),
+        (2, 'Lisa', 'luke、sam', '', '', 'NULL', '2022-07-23 12:26:24', '2022-07-23 12:26:34');        
         ");
 
     }

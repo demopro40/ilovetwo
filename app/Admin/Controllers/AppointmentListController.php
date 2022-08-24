@@ -81,36 +81,70 @@ class AppointmentListController extends AdminController
             $filter->equal('username', '會員名稱');
         });
 
-        // $html = <<<html
-        //     <style>
-        //         .add-member{
-        //             background-color:green;
-        //             padding:5px 10px; 
-        //             color:white;
-        //         }
-        //         .push-member{
-        //             background-color:green;
-        //             padding:5px 10px; 
-        //             color:white;
-        //         }
-        //         .back-member{
-        //             background-color:green;
-        //             padding:5px 10px; 
-        //             color:white;
-        //         }
-        //     </style>
-        // html;
-        // $grid->html($html);
         $grid->batchActions(function ($batch) { //php artisan admin:action Member\AddMember --name="新增推播" --grid-batch    
-            $batch->add(new AddMember());
-            $batch->add(new PushMember());
+            //$batch->add(new AddMember());
+            //$batch->add(new PushMember());
             //$batch->add(new BackMember());
         });
-        // $grid->tools(function (Grid\Tools $tools) { //php artisan admin:action Member\AddMember --name="新增推播"   
-        //     $tools->append(new AddMember());
-        //     $tools->append(new PushMember());
-        //     $tools->append(new BackMember());
-        // });
+        $grid->tools(function (Grid\Tools $tools) { //php artisan admin:action Member\AddMember --name="新增推播"   
+            // $tools->append(new AddMember());
+            // $tools->append(new PushMember());
+            //$tools->append(new BackMember());
+            $tools->append("<button class='add-member' id='add_member'>新增推播</button>");
+            $tools->append("<button class='push-member' id='push_member'>確認推播</button>");
+        });
+
+        $html = <<<html
+            <style>
+                .add-member{
+                    background-color:green;
+                    padding:5px 10px; 
+                    color:white;
+                }
+                .push-member{
+                    background-color:green;
+                    padding:5px 10px; 
+                    color:white;
+                }
+                .back-member{
+                    background-color:green;
+                    padding:5px 10px; 
+                    color:white;
+                }
+            </style>
+            <script>
+                $("#add_member").click(function(){
+                    $.post('/api/v1/addMember',
+                    {
+                        password : "2BGf9RZXDrgJ"
+                    },
+                    function(data, status){
+                        if(status == 'success'){
+                            alert('success');
+                            location.reload();
+                        }else{
+                            alert('fail');
+                        }
+                    });
+                });
+                $("#push_member").click(function(){
+                    $.post('/api/v1/pushMember',
+                    {
+                        password : "2BGf9RZXDrgJ"
+                    },
+                    function(data, status){
+                        if(status == 'success'){
+                            alert('success');
+                            location.reload();
+                        }else{
+                            alert('fail');
+                        }
+                    });
+                });
+            </script>
+html;
+        $grid->html($html);
+
         return $grid;
     }
 

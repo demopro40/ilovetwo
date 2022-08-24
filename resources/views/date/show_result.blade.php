@@ -89,9 +89,9 @@
                                     <br>
                                     <a href="{{ $dating_survey_m }}" target="__blank"><u>約會滿意度調查表(男生用)</u></a>              -->
                                 @endif
-                        
-                                @if($now > $date_start2 && $now < $date_over2 || true)
-                                  
+
+                                @if($value['type'] == '餐廳約會')
+                                @if($now > $date_start2 && $now < $date_over2 || env('TEST'))
                                     <div class="btn btn-primary" onclick="date_msg('{{$value['id']}}')" 
                                     style="background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;margin-top:20px;">約會訊息顯示</div>
                                     <br><br>
@@ -153,7 +153,7 @@
                                         <br>
                                     </div>    
                                 @endif
-                                
+                                @endif
                             </h5>
                         @endif
                         <br>

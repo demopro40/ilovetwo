@@ -107,10 +107,27 @@ class AppointmentRegistrationController extends AdminController
                     color:white;
                 }
             </style>
+            <script>
+                $("#pair_time").click(function(){
+                    $.post('/api/v1/pairTime',
+                    {
+                        password : "2BGf9RZXDrgJ"
+                    },
+                    function(data, status){
+                        if(status == 'success'){
+                            alert('success');
+                            location.reload();
+                        }else{
+                            alert('fail');
+                        }
+                    });
+                });
+            </script>
         html;
         $grid->html($html);
         $grid->tools(function (Grid\Tools $tools) {
-            $tools->append("<a href='/date/pair_time' class='btn pair_time'>結果配對</a>");
+            //$tools->append("<a href='/date/pair_time' class='btn pair_time'>結果配對</a>");
+            $tools->append("<button class='pair_time' id='pair_time'>結果配對</button>");
         });
         return $grid;
     }
