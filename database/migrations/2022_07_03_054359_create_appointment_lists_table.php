@@ -16,10 +16,10 @@ class CreateAppointmentListsTable extends Migration
         Schema::create('appointment_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username');
-            $table->string('appointment_username')->nullable();
-            $table->string('appointment_user_new')->nullable();
-            $table->string('appointment_user_latest')->nullable();
-            $table->string('appointment_user_excluded')->nullable();
+            $table->longText('appointment_username')->nullable();
+            $table->longText('appointment_user_new')->nullable();
+            $table->longText('appointment_user_latest')->nullable();
+            $table->longText('appointment_user_excluded')->nullable();
             $table->timestamps();
         });
     }

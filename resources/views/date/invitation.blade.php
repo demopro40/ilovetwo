@@ -38,7 +38,7 @@
         @endif
         <div class="row">
                 @if (count($data['push_data']) >= 1)
-                <div class="offset-md-4 col-md-8">
+                <div class="offset-md-3 col-md-8">
                 <form action="/date/invitation_post" method="post" id="invitation_form">
                     @csrf
                         <div class="form-group">

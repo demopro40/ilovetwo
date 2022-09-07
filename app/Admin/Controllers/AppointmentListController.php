@@ -72,7 +72,7 @@ class AppointmentListController extends AdminController
         });
         $grid->tools(function ($tools) {
             $tools->batch(function ($batch) {
-                $batch->disableDelete();//批次刪除
+                //$batch->disableDelete();//批次刪除
             });
         });
 
@@ -178,13 +178,13 @@ html;
     protected function form()
     {
         $form = new Form(new AppointmentList);
-        if($form->isCreating()){
-            $form->text('username', __('會員名稱'));
-        };
-        if($form->isEditing()){
-            $form->display('username', __('會員名稱'));
-        };
-
+        // if($form->isCreating()){
+        //     $form->text('username', __('會員名稱'));
+        // };
+        // if($form->isEditing()){
+        //     $form->display('username', __('會員名稱'));
+        // };
+        $form->text('username', __('會員名稱'));
         $form->text('appointment_username', __('排約會員'));
         $form->text('appointment_user_new', __('要推播的會員'));
         //$form->text('appointment_user_latest', __('最新推播的會員'));
