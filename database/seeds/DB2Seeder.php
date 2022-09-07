@@ -91,15 +91,22 @@ class DB2Seeder extends Seeder
             );
         }
 
-        //密碼:123123
-        $password = '$2y$10$u3gVb8n5.pscT0Z55hWKJ.emBtsVzlvUDPdF2dzPeiTelTwVoFjru';
-        $remember_token = 'VbbyfcKEEqrRWq9dU4ZsB2MM9Gm9GcKPbpJyOr8yQZE4oDiQhMbsQeLhSZj6';
-        $password2 = '$2y$10$pwdWcYIcbJT4Z7WLLMyyLOQZHbH5f/z/JxuiQqptUM/p982b.xvRS';
+        //密碼:472rht6syuygmgwa
+        //密碼:rhyc2w5qvrasz5wz
+        //密碼:97dzkhmcwaxveujk
+        $password0 = '$2y$10$KVZ6i4by5jZ.4gm5xT5K0Ojs52mpOwnW14nueei3DUMN2qZRN4aJu';
+        $remember_token0 = 'sNMxAp4bi5g7jkoVj0Zpv5DCyZEB4s2XZzfaTssKk8EOq9a6rlv7aNLcopmP';
+        $password = '$2y$10$sqwDNw0z0kAj8phxepOIneb3h8PcQ/UuGnAh4hxKV/8YVI6E.kabG';
+        $remember_token = 'lxmx51XPDhcOybxr7uv0MnCxHQ2s7I52BwWLbvn2U9Sk4ShWnynNybrNfkvI';
+        $password2 = '$2y$10$o/P/.uPY4qbUL0H1DCUOAuwUIcXuGHsxLe5ZEvQ99.IsgriSPzXTe';
         $remember_token2 = 'VbbyfcKEEqrRWq9dU4ZsB2MM9Gm9GcKPbpJyOr8yQZE4oDiQhMbsQeLhSZj6';
+
+        \DB::update("update `admin_users` set password = '{$password0}',`remember_token` = '{$remember_token0}' where 1 = 1");
+
         \DB::insert("
         INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`) VALUES
         (2, 'sam', '{$password}', 'sam', NULL, '{$remember_token}'),
-        (3, '小嵐', '{$password2}', '小嵐', NULL, '{$remember_token2}')             
+        (3, 'lan', '{$password2}', 'lan', NULL, '{$remember_token2}')             
         ;");
 
         \DB::insert("

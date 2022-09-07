@@ -14,7 +14,7 @@ composer install
 php artisan key:generate
 php artisan admin:install
 php artisan db:seed
-php artisan serve
+public/upload <= 需自行建立
 
 composer dump-autoload
 php artisan insert:excel 1
