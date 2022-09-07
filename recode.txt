@@ -15,6 +15,7 @@ php artisan key:generate
 php artisan admin:install
 php artisan db:seed
 public/upload <= 需自行建立
+config/admin.php 'https' => env('ADMIN_HTTPS', true)
 
 composer dump-autoload
 php artisan insert:excel 1
