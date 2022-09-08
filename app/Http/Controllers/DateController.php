@@ -34,6 +34,7 @@ class DateController extends Controller
 
     public function login_post(Request $request)
     {
+        $data = [];
         // Google reCAPTCHA 網站密鑰
         $data['secret'] = env('RECAPTCHA_S');
         $data['response'] = $request->input('g-recaptcha-response');
@@ -82,16 +83,7 @@ class DateController extends Controller
             'phone' => $password
         ])->pluck('username')->first();
 
-        if($username != null){
-            $MemberLoginLog = new MemberLoginLog();
-            $MemberLoginLog->account = $account;
-            $MemberLoginLog->password = $password;
-            $MemberLoginLog->ip_address = $ip_address;
-            $MemberLoginLog->status = 'success';
-            $MemberLoginLog->save();
-            Session::put('username', $username);
-            return redirect('/date/data');
-        }else{
+        if(empty($username)){
             $MemberLoginLog = new MemberLoginLog();
             $MemberLoginLog->account = $account;
             $MemberLoginLog->password = $password;
@@ -101,6 +93,15 @@ class DateController extends Controller
             Session::flash('error_msg', '帳號或密碼登入錯誤');
             return redirect('/date/login');
         }
+        
+        $MemberLoginLog = new MemberLoginLog();
+        $MemberLoginLog->account = $account;
+        $MemberLoginLog->password = $password;
+        $MemberLoginLog->ip_address = $ip_address;
+        $MemberLoginLog->status = 'success';
+        $MemberLoginLog->save();
+        Session::put('username', $username);
+        return redirect('/date/data');
     }
 
     public function data()
@@ -196,7 +197,7 @@ class DateController extends Controller
 
         $username = Session::get('username');
         $type = $request->input()['type'];
-        if($request->input()['type'] == 'type1'){
+        if($type == 'type1'){
             $rules = [
                 'chat_option' => 'required',
                 'datetime' => 'required',
@@ -212,7 +213,7 @@ class DateController extends Controller
                 return redirect('member_data')->withErrors($validator)->withInput();
             }
         }
-        if($request->input()['type'] == 'type2'){
+        if($type == 'type2'){
             $rules = [
                 'date_restaurant' => 'required',
                 'datetime2' => 'required',
