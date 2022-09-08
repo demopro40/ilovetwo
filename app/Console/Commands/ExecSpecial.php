@@ -4,22 +4,23 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\AppointmentRegistration;
+use App\Models\AppointmentList;
 
-class ExecCommand extends Command
+class ExecSpecial extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'exec:co';
+    protected $signature = 'e:s';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'execute:command';
+    protected $description = 'execute:special';
 
     /**
      * Create a new command instance.
@@ -40,14 +41,14 @@ class ExecCommand extends Command
     {
         $ary = [];
 
-        for($i=1;$i<=7;$i++){
+        for($i=1;$i<=500;$i++){
             array_push($ary, $i);
-            echo 'update '.'appointment result'.$i."\n";
+            echo 'update'.$i."\n";
         }
 
-        AppointmentRegistration::whereIn('id', $ary)
-            ->update(['appointment_result' => null]);
+        AppointmentList::whereIn('id', $ary)
+            ->update(['appointment_user_new' => null]);
 
-        
+        echo 'update ok';
     }
 }
