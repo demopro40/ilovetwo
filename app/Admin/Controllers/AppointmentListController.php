@@ -92,6 +92,7 @@ class AppointmentListController extends AdminController
             //$tools->append(new BackMember());
             $tools->append("<button class='add-member' id='add_member'>新增推播</button>");
             $tools->append("<button class='push-member' id='push_member'>確認推播</button>");
+            $tools->append("<button class='gold-push-member' id='gold_push_member'>黃金會員推播</button>");
         });
 
         $html = <<<html
@@ -103,6 +104,11 @@ class AppointmentListController extends AdminController
                 }
                 .push-member{
                     background-color:green;
+                    padding:5px 10px; 
+                    color:white;
+                }
+                .gold-push-member{
+                    background-color:blue;
                     padding:5px 10px; 
                     color:white;
                 }
@@ -129,6 +135,20 @@ class AppointmentListController extends AdminController
                 });
                 $("#push_member").click(function(){
                     $.post('/api/v1/pushMember',
+                    {
+                        password : "2BGf9RZXDrgJ"
+                    },
+                    function(data, status){
+                        if(status == 'success'){
+                            alert('success');
+                            location.reload();
+                        }else{
+                            alert('fail');
+                        }
+                    });
+                });
+                $("#gold_push_member").click(function(){
+                    $.post('/api/v1/goldPushMember',
                     {
                         password : "2BGf9RZXDrgJ"
                     },
@@ -185,7 +205,7 @@ html;
         //     $form->display('username', __('會員名稱'));
         // };
         $form->text('username', __('會員名稱'));
-        $form->text('appointment_username', __('排約會員'));
+        $form->textarea('appointment_username', __('排約會員'));
         $form->text('appointment_user_new', __('要推播的會員'));
         //$form->text('appointment_user_latest', __('最新推播的會員'));
         $form->text('appointment_user_excluded', __('排除的會員'))->help('輸入會員名稱，兩個以上需加頓號(、)當間隔，例 : sam、luke');

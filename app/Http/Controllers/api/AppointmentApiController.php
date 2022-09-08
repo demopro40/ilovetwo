@@ -80,6 +80,35 @@ class AppointmentApiController extends Controller
         return response()->json(['status' => 'success']);
     }
 
+    public function goldPushMember(Request $request)
+    {
+        $password = $request->input('password');
+        if($password != '2BGf9RZXDrgJ'){
+            return false;
+        }
+
+        $all_g_user_ary = MemberData::where('gender','m')->where('plan','G')->get(['username'])->toArray();
+        $all_f_user_ary = MemberData::where('gender','f')->get(['username'])->toArray();
+
+        $g_user_ary = [];
+        $f_user_ary = [];
+
+        foreach($all_g_user_ary as $value){
+            array_push($g_user_ary, $value['username']);
+        }
+        foreach($all_f_user_ary as $value){
+            array_push($f_user_ary, $value['username']);
+        }
+
+        $f_user_str = implode('、', $f_user_ary);
+
+        foreach($g_user_ary as $value){
+            AppointmentList::where('username',$value)->update(['appointment_username' => $f_user_str]);
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+
     public function pairTime(Request $request)
     {
         $password = $request->input('password');

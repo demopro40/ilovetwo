@@ -237,6 +237,16 @@ class DateController extends Controller
 
         $push_ary = $request->input()['push_user'];
         foreach($push_ary as $value){
+
+            //邀約對方會把自己名子加入對方推播名單
+            $a_user_data = AppointmentList::where('username',$value)->get(['appointment_username'])->first()->toArray();
+            $a_user_ary = explode('、',$a_user_data['appointment_username']);
+            if(!in_array($username, $a_user_ary)){
+                array_push($a_user_ary, $username);
+                $a_user_str =  implode('、', $a_user_ary);
+                AppointmentList::where('username',$value)->update(['appointment_username' => $a_user_str]);
+            }
+
             AppointmentRegistration::where('appointment_user', $value)->where('username', $username)->delete();
             $AppointmentRegistration = new AppointmentRegistration();
             $AppointmentRegistration->username = $username;
@@ -367,6 +377,10 @@ class DateController extends Controller
         $res = array_merge($result,$result2);
 
         foreach($res as $key => $value){
+            
+            $phone = MemberData::where('username', $value['appointment_user'])->get(['phone'])->first()->toArray();
+            $res[$key]['phone'] = $phone['phone'] ?? '';
+
             $message = DateMsg::where('table_id', $value['id'])->get()->toArray();
             if(!empty($message)){
                 if($gender == 'm'){
@@ -380,7 +394,6 @@ class DateController extends Controller
             $res[$key]['date_msg'] = $msg ?? '';
             $res[$key]['date_msg2'] = $msg2 ?? '';
         }  
-
 
         $data['result'] = $res;
 
@@ -453,6 +466,11 @@ class DateController extends Controller
         }else{
             return false;
         }
+    }
+
+    public function test()
+    {
+       
     }
 
 }
