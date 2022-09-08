@@ -17,6 +17,10 @@ php artisan db:seed
 public/upload <= 需自行建立
 config/admin.php 'https' => env('ADMIN_HTTPS', true)
 
+git stash
+git pull
+git stash pop
+
 composer dump-autoload
 php artisan insert:excel 1
 php artisan insert:excel 2
