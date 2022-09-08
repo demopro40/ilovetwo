@@ -93,7 +93,7 @@ class DateController extends Controller
             Session::flash('error_msg', '帳號或密碼登入錯誤');
             return redirect('/date/login');
         }
-        
+
         $MemberLoginLog = new MemberLoginLog();
         $MemberLoginLog->account = $account;
         $MemberLoginLog->password = $password;
@@ -426,17 +426,6 @@ class DateController extends Controller
         return redirect('/date/login');
     }
 
-    // public function pair_time()
-    // {
-    //     $username_ary = AppointmentRegistration::pluck('username')->toArray();
-    //     $username_ary = array_unique($username_ary);
-    //     foreach($username_ary as $value){
-    //         $this->pairTimeService->set($value);
-    //         \Log::info($value.'排約資料已設定');
-    //     }
-    //     return redirect()->back();
-    // }
-
     private function checkDate($type)
     {
         $w = date('w',time());
@@ -466,8 +455,4 @@ class DateController extends Controller
         }
     }
 
-    public function test()
-    {
-        
-    }
 }

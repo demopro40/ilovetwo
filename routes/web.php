@@ -26,6 +26,4 @@ Route::group(['prefix'=>'date'], function(){
     Route::get('/logout', 'DateController@logout');
     Route::get('/restaurant', 'DateController@restaurant');
     Route::get('/pair_time', 'DateController@pair_time');
-    Route::get('/test', 'DateController@test');
-
 }); 
