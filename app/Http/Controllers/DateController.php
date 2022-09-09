@@ -381,16 +381,16 @@ class DateController extends Controller
             $phone = MemberData::where('username', $value['appointment_user'])->get(['phone'])->first()->toArray();
             $res[$key]['phone'] = $phone['phone'] ?? '';
 
-            $message = DateMsg::where('table_id', $value['id'])->get()->toArray();
-            if(!empty($message)){
-                if($gender == 'm'){
-                    $msg = $message[0]['f_msg'];
-                    $msg2 = $message[0]['m_msg'];
-                }else{
-                    $msg = $message[0]['m_msg'];
-                    $msg2 = $message[0]['f_msg'];
-                }
-            }
+            // $message = DateMsg::where('table_id', $value['id'])->get()->toArray();
+            // if(!empty($message)){
+            //     if($gender == 'm'){
+            //         $msg = $message[0]['f_msg'];
+            //         $msg2 = $message[0]['m_msg'];
+            //     }else{
+            //         $msg = $message[0]['m_msg'];
+            //         $msg2 = $message[0]['f_msg'];
+            //     }
+            // }
             $res[$key]['date_msg'] = $msg ?? '';
             $res[$key]['date_msg2'] = $msg2 ?? '';
         }  

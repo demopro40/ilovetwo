@@ -79,6 +79,24 @@ class AppointmentListController extends AdminController
         $grid->filter(function($filter){
             $filter->disableIdFilter();
             $filter->equal('username', '會員名稱');
+            $filter->where(function ($query) {
+                $input = $this->input;
+                $data = MemberData::where('plan',$input)->get(['username'])->toArray();
+                $ary = [];
+                foreach($data as $value){
+                    array_push($ary, $value['username']);
+                }
+                $query->whereIn('username', $ary);
+            }, '方案別');
+            $filter->where(function ($query) {
+                $input = $this->input;
+                $data = MemberData::where('consultant',$input)->get(['username'])->toArray();
+                $ary = [];
+                foreach($data as $value){
+                    array_push($ary, $value['username']);
+                }
+                $query->whereIn('username', $ary);
+            }, '顧問');
         });
 
         $grid->batchActions(function ($batch) { //php artisan admin:action Member\AddMember --name="新增推播" --grid-batch    

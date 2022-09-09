@@ -26,6 +26,13 @@ class AppointmentApiController extends Controller
         $str = '';
         $appointmentList = AppointmentList::get()->toArray();
         foreach ($appointmentList as $value) {
+
+            //紀錄L 代表脫單 不用推播
+            $l_user = MemberData::where('username', $value['username'])->where('record','L')->pluck('username')->first();
+            if($l_user == $value['username']){
+                continue;
+            }
+            
             $username = $value['username'];
             $appointment_username = $value['appointment_username'];
             $appointment_user_new = $value['appointment_user_new'];
@@ -35,7 +42,10 @@ class AppointmentApiController extends Controller
             $appointment_user_new_ary = explode('、', $appointment_user_new);
             $appointment_user_excluded_ary = explode('、', $appointment_user_excluded);
             $ary = array_merge($appointment_username_ary, $appointment_user_new_ary, $appointment_user_excluded_ary);
-            $data = MemberData::whereNotIn('username',$ary)->whereNotIn('gender', [$gender])->pluck('username')->toArray();
+            $data = MemberData::whereNotIn('username',$ary)
+                        ->whereNotIn('gender', [$gender])
+                        ->pluck('username')
+                        ->toArray();
             if(count($data) > 1){
                 $rand_keys = array_rand ($data, 2); 
                 $str = $data[$rand_keys[0]].'、'.$data[$rand_keys[1]];
