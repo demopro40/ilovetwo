@@ -42,10 +42,11 @@ class MemberDataController extends AdminController
         $grid->column('plan', __('方案別'));
         $grid->column('live_place', __('居住地'));
         $grid->column('birth_place', __('出身地'));
-        $grid->column('in_love', __('脫單紀錄'));
+        $grid->column('pause_push', __('暫停推播(填L)'));
         $grid->column('describe', __('此人描述'));
         $grid->column('like_trait', __('喜歡類型'));
-        $grid->column('frequency', __('主約次數'));
+        $grid->column('prohibition', __('人數約滿(填N)'));
+        $grid->column('give_phone', __('不給手機號(填N)'));
         //$grid->column('created_at', __('建立時間'));
         // $grid->column('updated_at', __('更新時間'));
 
@@ -118,10 +119,11 @@ class MemberDataController extends AdminController
         $form->text('plan', __('方案別'));
         $form->text('live_place', __('居住地'));
         $form->text('birth_place', __('出身地'));
-        $form->text('in_love', __('脫單紀錄'));
+        $form->text('pause_push', __('暫停推播'));
         $form->text('describe', __('此人描述'));
         $form->text('like_trait', __('喜歡類型'));
-        $form->text('frequency', __('主約次數'));
+        $form->text('prohibition', __('人數約滿'));
+        $form->text('give_phone', __('不給手機號'));
         // $form->display('created_at', __('建立時間'));
         // $form->display('updated_at', __('更新時間'));
         $form->tools(function (Form\Tools $tools) {

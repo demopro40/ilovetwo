@@ -27,8 +27,8 @@ class AppointmentApiController extends Controller
         $appointmentList = AppointmentList::get()->toArray();
         foreach ($appointmentList as $value) {
 
-            //紀錄L 代表脫單 不用推播
-            $l_user = MemberData::where('username', $value['username'])->where('in_love','L')->pluck('username')->first();
+            //紀錄L 不用推播
+            $l_user = MemberData::where('username', $value['username'])->where('pause_push','L')->pluck('username')->first();
             if($l_user == $value['username']){
                 continue;
             }

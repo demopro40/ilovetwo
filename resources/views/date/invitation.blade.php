@@ -20,7 +20,11 @@
 <div class="jumbotron text-center">
     <h2><strong>約會時間表</strong></h2>
 </div>
-
+    @if (count($data['push_data']) < 1)
+        <div class="text-center">
+            <h2 style="color:red;">目前沒有可排約的對象</h2>
+        </div>
+    @endif
     <div class="container">
         <div class="row">
                 @if (count($data['push_data']) >= 1)
@@ -33,11 +37,6 @@
                             <div>{{ $error }}</div>
                             @endforeach
                         </div>
-                    </div>
-                @endif
-                @if (count($data['push_data']) < 1)
-                    <div class="text-center">
-                        <h2 style="color:red;">目前沒有可排約的對象</h2>
                     </div>
                 @endif
 

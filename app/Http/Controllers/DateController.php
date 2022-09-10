@@ -263,12 +263,12 @@ class DateController extends Controller
         ->pluck('appointment_user')
         ->toArray();
         if( (count($registration_username)+count($push_ary)) > $invitation_limit){
-            return redirect()->back()->withErrors('主約對象不可以超過'.$invitation_limit.'人');
+            return redirect()->back()->withErrors('為促成高約會跟高脫單率，所以每周主約對象限制'.$invitation_limit.'名以內');
         }
 
         //主約次數用完不可以再約
-        $invitation_frequency = MemberData::where('username', $username)->pluck('frequency')->first();
-        if($invitation_frequency == 'N'){
+        $prohibition = MemberData::where('username', $username)->pluck('prohibition')->first();
+        if($prohibition == 'N'){
             return redirect()->back()->withErrors('主約次數已用完');
         }
 
@@ -415,8 +415,12 @@ class DateController extends Controller
 
         foreach($res as $key => $value){
             
-            $phone = MemberData::where('username', $value['appointment_user'])->get(['phone'])->first()->toArray();
-            $res[$key]['phone'] = $phone['phone'] ?? '';
+            $phone = MemberData::where('username', $value['appointment_user'])
+            ->get(['phone','give_phone'])
+            ->toArray();
+            
+            $res[$key]['phone'] = $phone[0]['phone'] ?? '';
+            $res[$key]['give_phone'] = $phone[0]['give_phone'] ?? '';
 
             // $message = DateMsg::where('table_id', $value['id'])->get()->toArray();
             // if(!empty($message)){

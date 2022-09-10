@@ -73,7 +73,9 @@
                                 if($week == 5) $week = '五';
                                 if($week == 6) $week = '六';
                             @endphp
-                            <h5>手機號 : <span style="color:pink;">{{$value['phone'] ?? ''}}</span></h5>
+                            @if($value['give_phone'] !== 'N')
+                            <h5>對方手機號 : <span style="color:pink;">{{$value['phone'] ?? ''}}</span></h5>
+                            @endif
                             <h5>排約結果 : <br>
                                 @php
                                     $now = strtotime(date('Y-m-d H:i:s'));

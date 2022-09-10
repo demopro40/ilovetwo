@@ -64,10 +64,11 @@ class InsertExcel extends Command
                 'I' => 'plan',
                 'J' => 'live_place',
                 'K' => 'birth_place',
-                'L' => 'in_love',
+                'L' => 'pause_push',
                 'M' => 'describe',
                 'N' => 'like_trait',
-                'O' => 'frequency'
+                'O' => 'prohibition',
+                'P' => 'give_phone'
             ];
             $data_file = $this->excel_service->readExcelData('data', 1, $ary);
             if($data_file !== null){
