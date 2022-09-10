@@ -28,7 +28,7 @@ class AppointmentApiController extends Controller
         foreach ($appointmentList as $value) {
 
             //紀錄L 代表脫單 不用推播
-            $l_user = MemberData::where('username', $value['username'])->where('record','L')->pluck('username')->first();
+            $l_user = MemberData::where('username', $value['username'])->where('in_love','L')->pluck('username')->first();
             if($l_user == $value['username']){
                 continue;
             }
@@ -113,7 +113,7 @@ class AppointmentApiController extends Controller
         $f_user_str = implode('、', $f_user_ary);
 
         foreach($g_user_ary as $value){
-            AppointmentList::where('username',$value)->update(['appointment_username' => $f_user_str]);
+            AppointmentList::where('username',$value)->update(['appointment_username' => $f_user_str, 'appointment_user_new'=>null]);
         }
 
         return response()->json(['status' => 'success']);

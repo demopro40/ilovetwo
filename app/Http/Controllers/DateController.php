@@ -166,7 +166,7 @@ class DateController extends Controller
         
         $username = Session::get('username');
         $data = [];
-
+        $data['username'] = $username;
         //約會餐廳
         $plan = MemberData::where('username', $username)->pluck('plan')->first();
         if($plan != 'G'){
@@ -182,9 +182,27 @@ class DateController extends Controller
         $data['video_date'] = VideoDate::get(['datetime'])->toArray();
 
         //推播對象
+        $result_ary = [];
         $push_member = AppointmentList::where('username', $username)->pluck('appointment_username')->first();
         $push_member = explode('、', $push_member);
-        $data['push_data'] = MemberData::whereIn('username', $push_member)->get(['username', 'gender', 'data_url', 'data_url_simple', 'plan'])->toArray();
+
+        foreach($push_member as  $key => $value){
+            $res = MemberData::where('username', $value)
+                                ->get(['username'])
+                                ->toArray();
+            if(!empty($res)){
+                $result_ary[$key] = $res[0];        
+            }                                
+        }
+                      
+        $data['push_data'] = array_reverse($result_ary);
+
+        $registration_username = AppointmentRegistration::where('username', $username)
+        ->whereNull('appointment_respond')
+        ->whereNull('appointment_result')
+        ->pluck('appointment_user')
+        ->toArray();
+        $data['registration_username'] = $registration_username ?? '';
 
         return view('date.invitation', [ 'data' => $data ]);
     }
@@ -236,11 +254,30 @@ class DateController extends Controller
         }
 
         $push_ary = $request->input()['push_user'];
+
+        //主約最多只能約8人
+        $invitation_limit = 8;
+        $registration_username = AppointmentRegistration::where('username', $username)
+        ->whereNull('appointment_respond')
+        ->whereNull('appointment_result')
+        ->pluck('appointment_user')
+        ->toArray();
+        if( (count($registration_username)+count($push_ary)) > $invitation_limit){
+            return redirect()->back()->withErrors('主約對象不可以超過'.$invitation_limit.'人');
+        }
+
+        //主約次數用完不可以再約
+        $invitation_frequency = MemberData::where('username', $username)->pluck('frequency')->first();
+        if($invitation_frequency == 'N'){
+            return redirect()->back()->withErrors('主約次數已用完');
+        }
+
         foreach($push_ary as $value){
 
             //邀約對方會把自己名子加入對方推播名單
-            $a_user_data = AppointmentList::where('username',$value)->get(['appointment_username'])->first()->toArray();
-            $a_user_ary = explode('、',$a_user_data['appointment_username']);
+            $a_user_data = AppointmentList::where('username',$value)->get(['appointment_username'])->toArray();
+            $a_user_data = $a_user_data[0]['appointment_username'] ?? '';
+            $a_user_ary = explode('、', $a_user_data);
             if(!in_array($username, $a_user_ary)){
                 array_push($a_user_ary, $username);
                 $a_user_str =  implode('、', $a_user_ary);
@@ -293,7 +330,6 @@ class DateController extends Controller
 
         $username = Session::get('username');
         $data = [];
-        
         $invitation_data = AppointmentRegistration::where('appointment_user', $username)
                                 ->whereNull('appointment_result')
                                 ->get()
@@ -303,7 +339,7 @@ class DateController extends Controller
             $invitation_data[$key]['data_url'] = $data[0]['data_url'];
             $invitation_data[$key]['data_url_simple'] = $data[0]['data_url_simple'];
         }
-        $data['invitation_data'] = $invitation_data;
+        $data['invitation_data'] = array_reverse($invitation_data);
 
         //會員資料連結顯示
         $check = MemberData::where('username', $username)->get(['gender','plan'])->toArray();
@@ -323,7 +359,7 @@ class DateController extends Controller
                 }
             }
         }
-
+        $data['username'] = $username;
         return view('date.respond', [ 'data' => $data ]);
     }
 
@@ -345,7 +381,7 @@ class DateController extends Controller
             ->update(['appointment_respond' => $appointment_respond]);
         }
     
-        return redirect('/date/data');
+        return redirect('/date/respond');
     }
 
     public function show_result()
@@ -359,14 +395,15 @@ class DateController extends Controller
         $username = Session::get('username');
         $gender = MemberData::where('username', $username)->pluck('gender')->first();
         $data = [];
+        $data['username'] = $username;
         $result = AppointmentRegistration::where('username', $username)
-                            ->whereNotNull('appointment_respond')
-                            ->whereNotIn('appointment_respond', ['noSel'])
+                            // ->whereNotNull('appointment_respond')
+                            // ->whereNotIn('appointment_respond', ['noSel'])
                             ->get()
                             ->toArray();
         $result2 = AppointmentRegistration::where('appointment_user', $username)
-                            ->whereNotNull('appointment_respond')
-                            ->whereNotIn('appointment_respond', ['noSel'])
+                            // ->whereNotNull('appointment_respond')
+                            // ->whereNotIn('appointment_respond', ['noSel'])
                             ->get()
                             ->toArray();  
         foreach($result2 as $key => $value){
@@ -427,9 +464,10 @@ class DateController extends Controller
         if(!Session::has('username')){
             return redirect('/date/login');
         }
+        $username = Session::get('username');
         $data = [];
         $data['restaurant'] = Restaurant::get(['place', 'url'])->toArray();
-
+        $data['username'] = $username;
         return view('date.restaurant', [ 'data' => $data ]);
     }
 

@@ -17,6 +17,7 @@
 <body>
 
 <div style="padding-top:20px;padding-right:20px;" class="float-right">
+    <span style="color:#2b2b2b;"><strong>會員 : {{ $data['username'] ?? ''}}</strong></span>&nbsp;&nbsp; 
     <a href="/date/data" class="btn btn-primary">回上頁</a>
 </div>
 <div class="jumbotron text-center">

@@ -26,9 +26,12 @@ class CreateMemberDataTable extends Migration
             $table->string('plan')->nullable();
             $table->string('live_place')->nullable();
             $table->string('birth_place')->nullable();
-            $table->string('record')->nullable();
+            $table->string('in_love')->nullable();
+            $table->string('describe')->nullable();
+            $table->string('like_trait')->nullable();
+            $table->string('frequency')->nullable();
             $table->timestamps();
-        });
+        });   
     }
 
     /**

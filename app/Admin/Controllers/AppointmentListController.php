@@ -29,25 +29,21 @@ class AppointmentListController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new AppointmentList);
+
+        $grid->model()->orderBy('id', 'desc');
         $grid->column('username', __('會員名稱'))->display(function($data){
             $result = '';
-            $val = MemberData::where('username', $data)->get(['username','live_place','birth_place'])->toArray();
+            $val = MemberData::where('username', $data)->get()->toArray();
             if(empty($val)){
                 return $data;
             }
-            $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")";
+            $result .= $val[0]['username']."(出生:".$val[0]['birth_place'].")".
+            "(居住:".$val[0]['live_place'].")".
+            "(".$val[0]['describe'].")".
+            "(喜歡類型:".$val[0]['like_trait'].")";
             return $result;
         });
-        $grid->column('appointment_username', __('排約會員'))->display(function($data){
-            // $ary = explode('、', $data);
-            // $result = '';
-            // foreach($ary as $value){
-            //     $val = MemberData::where('username', $value)->get(['username','live_place','birth_place'])->toArray();
-            //     $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")"."、";
-            // }
-            // return $result;
-            return $data;
-        });
+        $grid->column('appointment_username', __('排約會員'))->width(500);
         $grid->column('appointment_user_new', __('要推播的會員'))->display(function($data){
             $ary = explode('、', $data);
             $result = '';

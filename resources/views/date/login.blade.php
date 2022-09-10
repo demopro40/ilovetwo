@@ -1,5 +1,6 @@
 @include('date.components.head')
   <style>
+
         body{
             background-color:#2b2b2b;
             color:#c3a367;
@@ -42,6 +43,11 @@
 		</div>
 	</form>
 </div>
+
+<footer class="text-center" style="margin-top:17%">
+	Copyright © 2022 Luke Rights Reserved.
+</footer>
+
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
    function onSubmit(token) {

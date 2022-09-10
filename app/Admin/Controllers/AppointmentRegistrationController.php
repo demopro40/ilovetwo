@@ -28,13 +28,15 @@ class AppointmentRegistrationController extends AdminController
     {
         $grid = new Grid(new AppointmentRegistration);
 
-        $grid->column('id', __('ID'))->sortable();
+        $grid->model()->orderBy('id', 'desc');
+
+        //$grid->column('id', __('ID'))->sortable();
         $grid->column('username', __('排約會員'));
         $grid->column('appointment_user', __('排約對象'));
         $grid->column('type', __('排約類型'));
         $grid->column('chat_option', __('聊天選項'));
         $grid->column('restaurant', __('餐廳地點'));
-        $grid->column('datetime', __('排約時段'));
+        $grid->column('datetime', __('排約時段'))->width(500);
         $grid->column('appointment_respond', __('排約對象回應'))->display(function($data){
             if($data == "noTime"){
                 $result = "noTime(時間無法配合，要另約時間)";
@@ -67,8 +69,11 @@ class AppointmentRegistrationController extends AdminController
             if($data == "otherSide"){
                 return $data;
             }
-            if($data == NULL){
-                return NULL;
+            if($data == 'no'){
+                return 'no(未回應)';
+            }
+            if($data == null){
+                return null;
             }
             
             $data = explode("、", $data);                       

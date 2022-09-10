@@ -19,11 +19,11 @@ class CreateAppointmentRegistrationsTable extends Migration
             $table->string('type');
             $table->string('chat_option')->nullable();
             $table->string('restaurant')->nullable();
-            $table->string('datetime')->nullable();
+            $table->longText('datetime')->nullable();
             $table->string('appointment_user');
-            $table->string('appointment_respond')->nullable();
-            $table->string('appointment_result')->nullable();
-            $table->string('message')->nullable();
+            $table->longText('appointment_respond')->nullable();
+            $table->longText('appointment_result')->nullable();
+            $table->longText('message')->nullable();
             $table->timestamps();
         });
     }

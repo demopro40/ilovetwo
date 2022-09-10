@@ -14,31 +14,33 @@
 <body>
 
 <div style="padding-top:20px;padding-right:20px;" class="float-right">
+    <span style="color:#2b2b2b;"><strong>會員 : {{ $data['username'] }}</strong></span>&nbsp;&nbsp; 
     <a href="/date/data" class="btn btn-primary">回上頁</a>
 </div>
 <div class="jumbotron text-center">
     <h2><strong>約會時間表</strong></h2>
 </div>
+
     <div class="container">
-        @if ($errors->any())
-            <div class="text-center">
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
-        @if (count($data['push_data']) < 1)
-            <div class="text-center">
-                <h2 style="color:red;">目前沒有可排約的對象</h2>
-            </div>
-        @endif
         <div class="row">
                 @if (count($data['push_data']) >= 1)
                 <div class="offset-md-3 col-md-8">
+
+                @if ($errors->any())
+                    <div class="text-center">
+                        <div class="alert alert-danger" style="width:500px;">
+                            @foreach ($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+                @if (count($data['push_data']) < 1)
+                    <div class="text-center">
+                        <h2 style="color:red;">目前沒有可排約的對象</h2>
+                    </div>
+                @endif
+
                 <form action="/date/invitation_post" method="post" id="invitation_form">
                     @csrf
                         <div class="form-group">
@@ -75,7 +77,12 @@
                         </div>
                    
                         <div class="form-group" id="restaurant" >
-                            <label for="date_restaurant">約會餐廳:</label>&emsp;<a href="/date/restaurant"> >>>>前往查看餐廳介紹</a>
+                            <label for="date_restaurant">約會餐廳:</label>&emsp;
+                            <!-- <a href="/date/restaurant"> >>>>前往查看餐廳介紹</a> -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#restaurant_introduction">
+                                前往查看餐廳介紹
+                            </button>
+                            <p></p>
                             <select class="form-control" id="date_restaurant" name="date_restaurant" style="max-width:500px;">
                                 <option value="1">請選擇</option>
                                 @foreach($data['restaurant'] as $value)
@@ -88,51 +95,68 @@
                         <div class="form-group">
                             <div id="datetime">
                                 <strong>可約會時間(建議選四個時段以上，邀約成功率上升):</strong><br>
-                                @foreach($data['video_date'] as $value)
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        @php 
-                                            $week = date('w',strtotime($value['datetime'])); 
-                                            if($week == 0) $week = '日';
-                                            if($week == 1) $week = '一';
-                                            if($week == 2) $week = '二';
-                                            if($week == 3) $week = '三';
-                                            if($week == 4) $week = '四';
-                                            if($week == 5) $week = '五';
-                                            if($week == 6) $week = '六';
-                                        @endphp
-                                        <input type="checkbox" class="form-check-input" name="datetime[]" value="{{ $value['datetime'] }}">
-                                        {{ date('Y/m/d', strtotime($value['datetime'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['datetime'])) }} ~ {{ date('H點i分', strtotime($value['datetime'])+1*60*30) }}
-                                    </label>
+                                <div class="container">
+                                    <div class="row">
+                                        @foreach($data['video_date'] as $value)
+                                        <div class="col-md-5">
+                                            <label>
+                                            <input type="checkbox" class="form-check-input" name="datetime[]" value="{{ $value['datetime'] }}">
+                                                @php 
+                                                    $week = date('w',strtotime($value['datetime'])); 
+                                                    if($week == 0) $week = '日';
+                                                    if($week == 1) $week = '一';
+                                                    if($week == 2) $week = '二';
+                                                    if($week == 3) $week = '三';
+                                                    if($week == 4) $week = '四';
+                                                    if($week == 5) $week = '五';
+                                                    if($week == 6) $week = '六';
+                                                @endphp
+                                                {{ date('Y/m/d', strtotime($value['datetime'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['datetime'])) }} ~ {{ date('H點i分', strtotime($value['datetime'])+1*60*30) }}
+                                            </label>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                @endforeach
                             </div>
 
                             <div id="datetime2">
                                 <strong>可約會時間(建議選四個時段以上，邀約成功率上升):</strong><br>
-                                @foreach($data['restaurant_date'] as $value)
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="datetime2[]" value="{{ $value['datetime'] }}">
-                                        @php 
-                                            $week = date('w',strtotime($value['datetime'])); 
-                                            if($week == 0) $week = '日';
-                                            if($week == 1) $week = '一';
-                                            if($week == 2) $week = '二';
-                                            if($week == 3) $week = '三';
-                                            if($week == 4) $week = '四';
-                                            if($week == 5) $week = '五';
-                                            if($week == 6) $week = '六';
-                                        @endphp
-                                        {{ date('Y/m/d', strtotime($value['datetime'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['datetime'])) }} ~ {{ date('H點i分', strtotime($value['datetime'])+1*60*60) }}
-                                    </label>
+                                <div class="container">
+                                    <div class="row">
+                                    @foreach($data['restaurant_date'] as $value)
+                                    <div class="col-md-5">
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" class="form-check-input" name="datetime2[]" value="{{ $value['datetime'] }}">
+                                                @php 
+                                                    $week = date('w',strtotime($value['datetime'])); 
+                                                    if($week == 0) $week = '日';
+                                                    if($week == 1) $week = '一';
+                                                    if($week == 2) $week = '二';
+                                                    if($week == 3) $week = '三';
+                                                    if($week == 4) $week = '四';
+                                                    if($week == 5) $week = '五';
+                                                    if($week == 6) $week = '六';
+                                                @endphp
+                                                {{ date('Y/m/d', strtotime($value['datetime'])) }} ({{$week}}) {{ date('H點i分', strtotime($value['datetime'])) }} ~ {{ date('H點i分', strtotime($value['datetime'])+1*60*60) }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    </div>
                                 </div>
-                                @endforeach
                             </div>
                         </div>
 
                         <div class="form-group" id="push_user">
-                            <h5>選擇排約對象 : </h5>
+                            <h5>選擇排約對象 : (主約對象不可以超過8人) </h5>
+                            @if(!empty($data['registration_username']))
+                                <div style="color:green;">已選擇 : 
+                                    @foreach($data['registration_username'] as $key => $value)
+                                        @if($key > 0)、@endif<span>{{$value}}</span>
+                                    @endforeach
+                                </div>
+                            @endif
                             @foreach($data['push_data'] as $value) 
                             <div class="form-check-inline">
                                 <label class="form-check-label">
@@ -154,6 +178,36 @@
                 </div>
         </div>
     </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="restaurant_introduction">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color:#2b2b2b;">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">餐廳介紹</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @foreach($data['restaurant'] as $value)
+                        <div>{{ $value['place'] }}</div>
+                        <a href="{{ $value['url'] }}">{{ $value['url'] }}</a>
+                        <br><br>
+                    @endforeach
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
 <br><br><br><br>
 
 <script>
@@ -196,6 +250,7 @@
                 //     alert('未勾選排約對象');
                 // }
             }
+
         });
         $('input[name="type"]').change(function() {
             if ($(this).is(':checked') && $(this).val() == "type1") {

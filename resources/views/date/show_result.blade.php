@@ -23,6 +23,7 @@
 <body>
 
 <div style="padding-top:20px;padding-right:20px;" class="float-right">
+    <span style="color:#2b2b2b;"><strong>會員 : {{ $data['username'] ?? ''}}</strong></span>&nbsp;&nbsp; 
     <a href="/date/data" class="btn btn-primary">回上頁</a>
 </div>
 <div class="jumbotron text-center">
@@ -36,6 +37,11 @@
     <div class="row">
     @if(!empty($data['result']))
             @foreach($data['result'] as $value)
+                @php
+                    if($value['appointment_result'] == null){
+                        continue;
+                    }
+                @endphp
                 @if($value['appointment_result'] !== 'otherSide')
                     <div class="col-md-4">
                         <h3>{{ $value['appointment_user'] }}</h3>
@@ -50,8 +56,8 @@
                         @endif
                         @if(!empty($value['message']))
                             <h5>排約結果 : <br><span style="color:pink;">{{ $value['message'] }}</span></h5>
-                        @elseif($value['appointment_result'] == null || $value['appointment_result'] == 'noSel')
-                            <h5>排約結果 : <br><span style="color:red;">未回應</span></h5>
+                        @elseif($value['appointment_result'] == 'no' || $value['appointment_result'] == 'noSel')
+                            <h5>排約結果 : <br><span style="color:red;">目前無回應，請擇期再約</span></h5>
                         @elseif($value['appointment_result'] == 'delete')
                             <h5>排約結果 : <br><span style="color:red;">對方拒絕邀約</span></h5>
                         @elseif($value['appointment_result'] == 'noTime')

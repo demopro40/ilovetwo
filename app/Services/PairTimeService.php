@@ -94,5 +94,7 @@ class PairTimeService
             }
 
         }
+
+        AppointmentRegistration::whereNull('appointment_respond')->update(['appointment_result' => 'no']);
     }
 }

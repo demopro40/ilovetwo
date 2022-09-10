@@ -26,23 +26,27 @@ class MemberDataController extends AdminController
     {
         $grid = new Grid(new MemberData);
 
-        //$grid->column('id', __('ID'))->sortable();
+        $grid->model()->orderBy('id', 'desc');
+        //$grid->column('id', __('ID'))->rsortable();
         $grid->column('username', __('會員名稱'));
-        $grid->column('identity', __('帳號(身分證)'))->sortable();
+        $grid->column('identity', __('帳號(身分證)'));
         $grid->column('phone', __('密碼(手機號)'));
-        $grid->column('email', __('email'));
+        $grid->column('email', __('email'))->width(150);
         $grid->column('gender', __('性別'))->radio([
             'm' => '男',
             'f' => '女',
         ]);
         $grid->column('consultant', __('顧問'));
-        $grid->column('data_url', __('資料連結'));
-        $grid->column('data_url_simple', __('資料連結刪減版'));
+        $grid->column('data_url', __('資料連結'))->width(150);
+        $grid->column('data_url_simple', __('資料連結刪減版'))->width(150);
         $grid->column('plan', __('方案別'));
         $grid->column('live_place', __('居住地'));
         $grid->column('birth_place', __('出身地'));
-        $grid->column('record', __('紀錄'));
-        // $grid->column('created_at', __('建立時間'));
+        $grid->column('in_love', __('脫單紀錄'));
+        $grid->column('describe', __('此人描述'));
+        $grid->column('like_trait', __('喜歡類型'));
+        $grid->column('frequency', __('主約次數'));
+        //$grid->column('created_at', __('建立時間'));
         // $grid->column('updated_at', __('更新時間'));
 
         $grid->filter(function($filter){
@@ -114,7 +118,10 @@ class MemberDataController extends AdminController
         $form->text('plan', __('方案別'));
         $form->text('live_place', __('居住地'));
         $form->text('birth_place', __('出身地'));
-        $form->text('record', __('紀錄'));
+        $form->text('in_love', __('脫單紀錄'));
+        $form->text('describe', __('此人描述'));
+        $form->text('like_trait', __('喜歡類型'));
+        $form->text('frequency', __('主約次數'));
         // $form->display('created_at', __('建立時間'));
         // $form->display('updated_at', __('更新時間'));
         $form->tools(function (Form\Tools $tools) {

@@ -45,11 +45,12 @@
 <body>
 			
 <div style="padding-top:20px;padding-right:20px;" class="float-right">
+    <span style="color:#2b2b2b;"><strong>會員 : {{ $data['username'] ?? ''}}</strong></span>&nbsp;&nbsp; 
     <a href="/date/logout" class="btn btn-danger">登出</a>
 </div>
 
 <div class="jumbotron text-center">
-    <h2><strong>會員暱稱：{{ $data['username'] }}</strong></h2>
+    <h2><strong>愛樂Two排約系統</strong></h2>
 </div>
 
 <div class="container">
@@ -86,8 +87,12 @@
     </div>
     <div class="col-sm-12">
         <h3>推播會員 :</h3>
-        @foreach($data['push_data'] as $value)
-        <div>
+        @foreach($data['push_data'] as $key => $value)
+        @if($key < 4)
+            <div style='color:pink;'>
+        @else
+            <div>
+        @endif
             <span>{{ $value['username'] }}</span>&nbsp;&nbsp;
             <br>
             @if($data['show'] == 'd' || empty($value['data_url_simple']))
