@@ -21,7 +21,7 @@ class PairTimeService
                                             ])
                                             ->toArray();
 
-        foreach($result as $value){
+        foreach($result as $key => $value){
             if($value['appointment_respond'] == 'delete' ||
                 $value['appointment_respond'] == 'noTime' ||
                 $value['appointment_respond'] == 'noSel'){
@@ -30,45 +30,57 @@ class PairTimeService
                     ->update(['appointment_result' => $value['appointment_respond']]);
                 continue;
             }
-
+if($key < 10){
+    \Log::info($value);
+}else{
+    return false;
+}            
             $respond = explode("、", $value['appointment_respond']);
             foreach($respond as $val){
 
                 $respond_time = $val;   
+                $respond_time2 = date('Y-m-d H:i:s', strtotime("+30 minute", strtotime($respond_time)));
+                $respond_time3 = date('Y-m-d H:i:s', strtotime("-30 minute", strtotime($respond_time)));
+                $respond_time4 = date('Y-m-d H:i:s', strtotime("+60 minute", strtotime($respond_time)));
+                $respond_time3 = date('Y-m-d H:i:s', strtotime("-60 minute", strtotime($respond_time)));
 
                 if($value['type'] == '視訊約會'){
+
                     //檢查約人的名單中是否有占用的時間
                     $hasResult = AppointmentRegistration::where('username', $value['username'])
                             ->where('appointment_result', 'like' , "%".$respond_time."%")
+                            ->orwhere('appointment_result', 'like' , "%".$respond_time2."%")
+                            ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
+                            ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                             ->first();
 
                     //檢查被約的名單中是否有占用的時間
                     $hasResult2 = AppointmentRegistration::where('appointment_user', $value['username'])
                             ->where('appointment_result', 'like' , "%".$respond_time."%")
+                            ->orwhere('appointment_result', 'like' , "%".$respond_time2."%")
+                            ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
+                            ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                             ->first();
 
                     if($hasResult || $hasResult2) continue;
                 }
 
                 if($value['type'] == '餐廳約會'){
-                    $respond_time2 = date('Y-m-d H:i:s', strtotime("+30 minute", strtotime($respond_time)));
-                    // $respond_time3 = date('Y-m-d H:i:s', strtotime("+60 minute", strtotime($respond_time)));
-                    // $respond_time4 = date('Y-m-d H:i:s', strtotime("+90 minute", strtotime($respond_time)));
 
                     //檢查約人的名單中是否有占用的時間
                     $hasResult = AppointmentRegistration::where('username', $value['username'])
                         ->where('appointment_result', 'like' , "%".$respond_time."%")
                         ->orwhere('appointment_result', 'like' , "%".$respond_time2."%")
-                        // ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
-                        // ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
+                        ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
+                        ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                         ->first();
                     
                     //檢查被約的名單中是否有占用的時間    
                     $hasResult2 = AppointmentRegistration::where('appointment_user', $value['username'])
                         ->where('appointment_result', 'like' , "%".$respond_time."%")
                         ->orWhere('appointment_result', 'like' , "%".$respond_time2."%")
-                        // ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
-                        // ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
+                        ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
+                        ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                         ->first();
 
                     //$respond_time = $respond_time.'、'.$respond_time2.'、'.$respond_time3.'、'.$respond_time4;

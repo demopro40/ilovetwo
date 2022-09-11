@@ -152,8 +152,8 @@
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary"
                     style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">送出</button>
-                    <button type="button" class="btn btn-danger" href="/date/data"
-                    style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">取消</button>
+                    <button type="button" class="btn btn-danger" onclick="goback()"
+                    style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">離開</button>
                 </div>
                 @endif
             <br>
@@ -207,6 +207,10 @@
             $(".no" + item).prop('checked',false);
             $(".del" + item).prop('checked',false);
         }
+    }
+
+    function goback(){
+        location.href="/date/data";
     }
 </script>
 

@@ -56,7 +56,7 @@
                         @endif
                         @if(!empty($value['message']))
                             <h5>排約結果 : <br><span style="color:pink;">{{ $value['message'] }}</span></h5>
-                        @elseif($value['appointment_result'] == 'no' || $value['appointment_result'] == 'noSel')
+                        @elseif($value['appointment_result'] == 'no' || $value['appointment_result'] == 'noSel' || $value['appointment_result'] == null)
                             <h5>排約結果 : <br><span style="color:red;">目前無回應，請擇期再約</span></h5>
                         @elseif($value['appointment_result'] == 'delete')
                             <h5>排約結果 : <br><span style="color:red;">對方拒絕邀約</span></h5>

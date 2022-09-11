@@ -39,16 +39,17 @@ class ExecSpecial extends Command
      */
     public function handle()
     {
+
+        echo 'start'."\n";
         $ary = [];
 
         for($i=1;$i<=500;$i++){
             array_push($ary, $i);
-            echo 'update'.$i."\n";
         }
 
-        AppointmentList::whereIn('id', $ary)
-            ->update(['appointment_user_new' => null]);
+        AppointmentRegistration::whereIn('id', $ary)
+            ->update(['appointment_result' => null]);
 
-        echo 'update ok';
+        echo 'end';
     }
 }

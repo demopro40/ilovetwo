@@ -34,31 +34,32 @@ class DateController extends Controller
 
     public function login_post(Request $request)
     {
-        $data = [];
-        // Google reCAPTCHA 網站密鑰
-        $data['secret'] = env('RECAPTCHA_S');
-        $data['response'] = $request->input('g-recaptcha-response');
-        $ch = curl_init();
-        // 使用CURL驗證
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        $result = curl_exec($ch);
-        curl_close($ch);
-        // 解密
-        $result = json_decode($result, true);
+        if(!env('TEST')){
+            $data = [];
+            // Google reCAPTCHA 網站密鑰
+            $data['secret'] = env('RECAPTCHA_S');
+            $data['response'] = $request->input('g-recaptcha-response');
+            $ch = curl_init();
+            // 使用CURL驗證
+            curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);
+            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            $result = curl_exec($ch);
+            curl_close($ch);
+            // 解密
+            $result = json_decode($result, true);
 
-        // 檢查是否通過驗證
-        if ( !isset($result['success']) || !$result['success'] && !env('TEST')) {
-            // 驗證失敗
-            Session::flash('error_msg', '驗證失敗');
-            return redirect('/date/login');
-        } else {
-            // 驗證成功
-        
+            // 檢查是否通過驗證
+            if ( !isset($result['success']) || !$result['success']) {
+                // 驗證失敗
+                Session::flash('error_msg', '驗證失敗');
+                return redirect('/date/login');
+            } else {
+                // 驗證成功
+            }
         }
         
         $account = $request->input('account');
