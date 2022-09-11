@@ -193,7 +193,7 @@
                 <div class="modal-body">
                     @foreach($data['restaurant'] as $value)
                         <div>{{ $value['place'] }}</div>
-                        <a href="{{ $value['url'] }}">{{ $value['url'] }}</a>
+                        <a href="{{ $value['url'] }}" target=' _blank'>{{ $value['url'] }}</a>
                         <br><br>
                     @endforeach
                 </div>
