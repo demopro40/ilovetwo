@@ -18,7 +18,7 @@
     <span style="color:#2b2b2b;"><strong>會員 : {{ $data['username'] ?? ''}}</strong></span>&nbsp;&nbsp; 
     <a href="/date/invitation" class="btn btn-primary">回上頁</a>
 </div>
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" style="padding-top:80px;">
     <h2><strong>愛樂Two排約餐廳介紹</strong></h2>
 </div>
 

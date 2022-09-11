@@ -49,7 +49,7 @@
     <a href="/date/logout" class="btn btn-danger">登出</a>
 </div>
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" style="padding-top:80px;">
     <h2><strong>愛樂Two排約系統</strong></h2>
 </div>
 
@@ -64,21 +64,21 @@
 
         @if($show1)
             <a class="btn btn-primary" href="/date/invitation"
-            style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">
+            style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;margin-top:5px;">
                 約會邀請表
             </a>
         @endif
 
         @if($show2)
             <a class="btn btn-primary" href="/date/respond"
-            style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">
+            style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;margin-top:5px;">
                 約會回應表
             </a>
         @endif
 
         @if($show3)
             <a class="btn btn-primary" href="/date/show_result"
-            style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">
+            style="width:150px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;margin-top:5px;">
                 配對結果
             </a>
         @endif
