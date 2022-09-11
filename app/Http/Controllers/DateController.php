@@ -316,7 +316,7 @@ class DateController extends Controller
         }
 
         
-        return redirect('/date/data');
+        return redirect('/date/invitation');
     }
 
     public function respond()
