@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="form-group" id="push_user">
-                            <h5>選擇排約對象 : (主約對象不可以超過8人) </h5>
+                            <h5>選擇排約對象 : (為促成高約會跟高脫單率，所以每週主約對象限制8名以內) </h5>
                             @if(!empty($data['registration_username']))
                                 <div style="color:green;">已選擇 : 
                                     @foreach($data['registration_username'] as $key => $value)

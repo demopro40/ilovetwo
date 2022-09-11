@@ -263,7 +263,7 @@ class DateController extends Controller
         ->pluck('appointment_user')
         ->toArray();
         if( (count($registration_username)+count($push_ary)) > $invitation_limit){
-            return redirect()->back()->withErrors('為促成高約會跟高脫單率，所以每周主約對象限制'.$invitation_limit.'名以內');
+            return redirect()->back()->withErrors('為促成高約會跟高脫單率，所以每週主約對象限制'.$invitation_limit.'名以內');
         }
 
         //主約次數用完不可以再約
