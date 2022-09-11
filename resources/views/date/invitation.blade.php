@@ -170,8 +170,8 @@
                         <div class="">
                             <button type="submit" class="btn btn-primary"
                             style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">送出</button>
-                            <a type="button" class="btn btn-danger" href="/date/data"
-                            style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">取消</a>
+                            <button type="button" class="btn btn-danger" href="/date/data"
+                            style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">取消</button>
                         </div>
                     @endif
                 </form>
