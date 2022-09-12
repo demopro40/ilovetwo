@@ -149,13 +149,16 @@
                         </div>
 
                         <div class="form-group" id="push_user">
-                            <h5>選擇排約對象 : (為促成高約會跟高脫單率，所以每週主約對象限制8名以內) </h5>
+                            <h5>選擇排約對象 : </h5>
                             @if(!empty($data['registration_username']))
-                                <div style="color:green;">已選擇 : 
+                                <h5 style="color:#33FFAF;">
+                                    <strong>
+                                    已選擇 : 
                                     @foreach($data['registration_username'] as $key => $value)
                                         @if($key > 0)、@endif<span>{{$value}}</span>
                                     @endforeach
-                                </div>
+                                    </strong>
+                                </h5>
                             @endif
                             @foreach($data['push_data'] as $value) 
                             <div class="form-check-inline">
@@ -168,7 +171,7 @@
                         </div>
 
                         <div class="">
-                            <button type="submit" class="btn btn-primary"
+                            <button type="submit" class="btn btn-primary" onclick="javascript:alert('資料已送出')";
                             style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">送出</button>
                             <button type="button" class="btn btn-danger" onclick="goback()"
                             style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">離開</button>
@@ -213,10 +216,7 @@
 <script>
     $(document).ready(function(){
         $("#datetime").hide();
-        //$("#datetime2").hide();
-        //$("#restaurant").hide();
         $("#chat_option").hide();
-        //$("#push_user").hide();
         $("#invitation_form").on('submit', function(e){
             if (!$('input[name="type"]').is(':checked')) {
                 e.preventDefault();
@@ -231,10 +231,10 @@
                     e.preventDefault();
                     alert('未勾選視訊約會時間');
                 }
-                // if (!$('input[name="push_user[]"]').is(':checked')) {
-                //     e.preventDefault();
-                //     alert('未勾選排約對象');
-                // }
+                if (!$('input[name="push_user[]"]').is(':checked')) {
+                    e.preventDefault();
+                    alert('未勾選排約對象');
+                }
             }
             if($("#type2").is(':checked')){
                 if ($("#date_restaurant").val() == "1") {
@@ -245,12 +245,11 @@
                     e.preventDefault();
                     alert('未勾選餐廳約會時間');
                 }
-                // if (!$('input[name="push_user[]"]').is(':checked')) {
-                //     e.preventDefault();
-                //     alert('未勾選排約對象');
-                // }
+                if (!$('input[name="push_user[]"]').is(':checked')) {
+                    e.preventDefault();
+                    alert('未勾選排約對象');
+                }
             }
-
         });
         $('input[name="type"]').change(function() {
             if ($(this).is(':checked') && $(this).val() == "type1") {
@@ -258,14 +257,12 @@
                 $("#datetime").show();
                 $("#restaurant").hide();
                 $("#chat_option").show();
-                //$("#push_user").show();
             }
             if ($(this).is(':checked') && $(this).val() == "type2") {
                 $("#datetime").hide();
                 $("#datetime2").show();
                 $("#restaurant").show();
                 $("#chat_option").hide();
-                //$("#push_user").show();
             }
         });
     });

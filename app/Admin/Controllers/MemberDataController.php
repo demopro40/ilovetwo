@@ -54,8 +54,8 @@ class MemberDataController extends AdminController
 
             $filter->disableIdFilter();
             $filter->equal('username', '會員名稱');
-            $filter->equal('user_id', '身分證');
-            $filter->equal('password', '手機號');
+            $filter->equal('identity', '身分證');
+            $filter->equal('phone', '手機號');
             $filter->equal('gender', __('性別'))->radio(['m' => '男','f'=>'女']);
             $filter->equal('consultant', '顧問');
 

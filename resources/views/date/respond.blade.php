@@ -109,14 +109,14 @@
                                 <br>
                                 @if(!empty($value['appointment_respond']))
                                     @if($value['appointment_respond'] == 'delete')
-                                        <h3 style="color:green">已回復 : 沒有意願排約</h3>
+                                        <h5 style="color:#33FFAF;"><strong>已回復 : 沒有意願排約</strong></h5>
                                     @elseif($value['appointment_respond'] == 'noTime')
-                                        <h3 style="color:green">已回復 : 以上時間無法配合，要另約時間</h3>
+                                        <h5 style="color:#33FFAF;"><strong>已回復 : 以上時間無法配合，要另約時間</strong></h5>
                                     @elseif($value['appointment_respond'] == 'noSel')
-                                        <h3 style="color:green">暫不回應(對方不會看到訊息)</h3>    
+                                        <h5 style="color:#33FFAF;"><strong>暫不回應(對方不會看到訊息)</strong></h5>    
                                     @else
-                                        <h5 style="color:green"><strong>已回復 : </strong></h5>
-                                        <h5 style="color:green">
+                                        <h5 style="color:#33FFAF;"><strong>已回復 : </strong></h5>
+                                        <h5 style="color:#33FFAF;">
                                             @php
                                                 $data = explode("、", $value['appointment_respond']);
                                                 foreach( $data as $val){
@@ -150,7 +150,7 @@
                 </div>
                 <br>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary"
+                    <button type="submit" class="btn btn-primary" onclick="javascript:alert('資料已送出')";
                     style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">送出</button>
                     <button type="button" class="btn btn-danger" onclick="goback()"
                     style="width:100px;background-color:#c3a367;color:#2b2b2b;border:0px;font-weight:900;">離開</button>
@@ -212,6 +212,7 @@
     function goback(){
         location.href="/date/data";
     }
+
 </script>
 
 @include('date.components.footer')

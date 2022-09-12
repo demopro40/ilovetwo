@@ -72,6 +72,10 @@ class AppointmentRegistrationController extends AdminController
             if($data == 'no'){
                 return 'no(未回應)';
             }
+            if($data == "mismatch"){
+                $result = "mismatch(時間不匹配)";
+                return $result;
+            }
             if($data == null){
                 return null;
             }

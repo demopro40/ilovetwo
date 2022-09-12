@@ -10,6 +10,7 @@
 <body>
 
 <br><br>
+@if(!env('MAINTENANCE'))
 <div class="container" style="max-width:332px;">
 	<h2 class="text-center"><strong>愛樂Two會員登入</strong></h2>
 	<br>
@@ -47,6 +48,12 @@
 <footer class="text-center" style="margin-top:17%">
 	Copyright © 2022 Luke Rights Reserved.
 </footer>
+@else
+	<h1 class="text-center" style="margin-top:7%">網站維護中</h1>
+<footer class="text-center" style="margin-top:30%">
+	Copyright © 2022 Luke Rights Reserved.
+</footer>
+@endif
 
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>

@@ -316,8 +316,7 @@ class DateController extends Controller
             $AppointmentRegistration->save();
         }
 
-        
-        return redirect('/date/invitation');
+        return redirect('/date/data');
     }
 
     public function respond()
@@ -382,7 +381,7 @@ class DateController extends Controller
             ->update(['appointment_respond' => $appointment_respond]);
         }
     
-        return redirect('/date/respond');
+        return redirect('/date/data');
     }
 
     public function show_result()

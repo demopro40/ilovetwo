@@ -87,23 +87,18 @@
     <div class="col-sm-12">
         <h3>推播會員 :</h3>
         @foreach($data['push_data'] as $key => $value)
-        @if($key < 4)
-            <div style='color:pink;'>
-        @else
             <div>
-        @endif
-            <span>{{ $value['username'] }}</span>&nbsp;&nbsp;
-            <br>
-            @if($data['show'] == 'd' || empty($value['data_url_simple']))
-                <a href="{{ $value['data_url'] }}" target="_blank" style="color:#c3a367;">
-                    <u>{{ $value['data_url'] }}</u>
-                </a>
-            @else
-                <a href="{{ $value['data_url_simple'] }}" target="_blank" style="color:#c3a367;">
-                    <u>{{ $value['data_url_simple'] }}</u>
-                </a>
-            @endif
-        </div>&nbsp;
+                <span>{{ $value['username'] }}</span>&nbsp;&nbsp;
+                @if($data['show'] == 'd' || empty($value['data_url_simple']))
+                    <a href="{{ $value['data_url'] }}" target="_blank" style="color:#c3a367;">
+                        <u>詳細資料</u>
+                    </a>
+                @else
+                    <a href="{{ $value['data_url_simple'] }}" target="_blank" style="color:#c3a367;">
+                        <u>詳細資料</u>
+                    </a>
+                @endif
+            </div>&nbsp;
         @endforeach
     </div>
   </div>

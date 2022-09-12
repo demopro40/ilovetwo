@@ -30,19 +30,13 @@ class PairTimeService
                     ->update(['appointment_result' => $value['appointment_respond']]);
                 continue;
             }
-if($key < 10){
-    \Log::info($value);
-}else{
-    return false;
-}            
+       
             $respond = explode("、", $value['appointment_respond']);
             foreach($respond as $val){
 
                 $respond_time = $val;   
                 $respond_time2 = date('Y-m-d H:i:s', strtotime("+30 minute", strtotime($respond_time)));
                 $respond_time3 = date('Y-m-d H:i:s', strtotime("-30 minute", strtotime($respond_time)));
-                $respond_time4 = date('Y-m-d H:i:s', strtotime("+60 minute", strtotime($respond_time)));
-                $respond_time3 = date('Y-m-d H:i:s', strtotime("-60 minute", strtotime($respond_time)));
 
                 if($value['type'] == '視訊約會'){
 
@@ -51,7 +45,6 @@ if($key < 10){
                             ->where('appointment_result', 'like' , "%".$respond_time."%")
                             ->orwhere('appointment_result', 'like' , "%".$respond_time2."%")
                             ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
-                            ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                             ->first();
 
                     //檢查被約的名單中是否有占用的時間
@@ -59,7 +52,6 @@ if($key < 10){
                             ->where('appointment_result', 'like' , "%".$respond_time."%")
                             ->orwhere('appointment_result', 'like' , "%".$respond_time2."%")
                             ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
-                            ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                             ->first();
 
                     if($hasResult || $hasResult2) continue;
@@ -72,7 +64,6 @@ if($key < 10){
                         ->where('appointment_result', 'like' , "%".$respond_time."%")
                         ->orwhere('appointment_result', 'like' , "%".$respond_time2."%")
                         ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
-                        ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                         ->first();
                     
                     //檢查被約的名單中是否有占用的時間    
@@ -80,7 +71,6 @@ if($key < 10){
                         ->where('appointment_result', 'like' , "%".$respond_time."%")
                         ->orWhere('appointment_result', 'like' , "%".$respond_time2."%")
                         ->orWhere('appointment_result', 'like' , "%".$respond_time3."%")
-                        ->orWhere('appointment_result', 'like' , "%".$respond_time4."%")
                         ->first();
 
                     //$respond_time = $respond_time.'、'.$respond_time2.'、'.$respond_time3.'、'.$respond_time4;
@@ -92,10 +82,9 @@ if($key < 10){
                 $hasEachOther = AppointmentRegistration::where('appointment_user', $value['username'])
                                 ->where('username', $value['appointment_user'])
                                 ->first();
-                //排約者是男生
+                //排約者是女生
                 $gender = MemberData::where('username', $value['username'])->pluck('gender')->first();
-
-                if($hasEachOther && $gender == 'm'){
+                if($hasEachOther && $gender == 'f'){
                     $respond_time = 'otherSide';
                 } 
 
@@ -106,7 +95,7 @@ if($key < 10){
             }
 
         }
-
         AppointmentRegistration::whereNull('appointment_respond')->update(['appointment_result' => 'no']);
+        AppointmentRegistration::whereNull('appointment_result')->update(['appointment_result' => 'mismatch']);
     }
 }
