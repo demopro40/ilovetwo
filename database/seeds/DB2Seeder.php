@@ -77,6 +77,14 @@ class DB2Seeder extends Seeder
                 'uri'=>'/Upload',
                 'permission'=>null,
             ],
+            [
+                'parent_id'=>'8',
+                'order'=>'16',
+                'title'=>'其他',
+                'icon'=>'fa-bars',
+                'uri'=>'/Other',
+                'permission'=>null,
+            ],
         ];
         foreach($ary as $value){
             DB::table('admin_menu')->insert(

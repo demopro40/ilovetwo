@@ -10,7 +10,7 @@
 <body>
 
 <br><br>
-@if(!env('MAINTENANCE'))
+@if(!$data['test'])
 <div class="container" style="max-width:332px;">
 	<h2 class="text-center"><strong>愛樂Two會員登入</strong></h2>
 	<br>
@@ -45,7 +45,7 @@
 	</form>
 </div>
 
-<footer class="text-center" style="margin-top:17%">
+<footer class="text-center" style="margin-top:20%">
 	Copyright © 2022 Luke Rights Reserved.
 </footer>
 @else

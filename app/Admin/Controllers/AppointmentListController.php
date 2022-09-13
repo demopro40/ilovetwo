@@ -107,6 +107,7 @@ class AppointmentListController extends AdminController
             $tools->append("<button class='add-member' id='add_member'>新增推播</button>");
             $tools->append("<button class='push-member' id='push_member'>確認推播</button>");
             $tools->append("<button class='gold-push-member' id='gold_push_member'>黃金會員推播</button>");
+            $tools->append("<button class='invite-insert-push' id='invite_insert_push'>主約加入被約推播</button>");
         });
 
         $html = <<<html
@@ -123,6 +124,11 @@ class AppointmentListController extends AdminController
                 }
                 .gold-push-member{
                     background-color:blue;
+                    padding:5px 10px; 
+                    color:white;
+                }
+                .invite-insert-push{
+                    background-color:orange;
                     padding:5px 10px; 
                     color:white;
                 }
@@ -163,6 +169,20 @@ class AppointmentListController extends AdminController
                 });
                 $("#gold_push_member").click(function(){
                     $.post('/api/v1/goldPushMember',
+                    {
+                        password : "2BGf9RZXDrgJ"
+                    },
+                    function(data, status){
+                        if(status == 'success'){
+                            alert('success');
+                            location.reload();
+                        }else{
+                            alert('fail');
+                        }
+                    });
+                });
+                $("#invite_insert_push").click(function(){
+                    $.post('/api/v1/inviteInsertPush',
                     {
                         password : "2BGf9RZXDrgJ"
                     },

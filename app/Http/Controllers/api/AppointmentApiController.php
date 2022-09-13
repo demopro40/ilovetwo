@@ -32,6 +32,10 @@ class AppointmentApiController extends Controller
             if($l_user == $value['username']){
                 continue;
             }
+
+            if(!empty($value['appointment_user_new'])){
+                continue;
+            }
             
             $username = $value['username'];
             $appointment_username = $value['appointment_username'];
@@ -114,6 +118,30 @@ class AppointmentApiController extends Controller
 
         foreach($g_user_ary as $value){
             AppointmentList::where('username',$value)->update(['appointment_username' => $f_user_str, 'appointment_user_new'=>null]);
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function inviteInsertPush(Request $request)
+    {
+        $password = $request->input('password');
+        if($password != '2BGf9RZXDrgJ'){
+            return false;
+        }
+
+        $data = AppointmentRegistration::get(['appointment_user','username'])->toArray();
+
+        foreach($data as $value){
+            $data2 = AppointmentList::where('username', $value['appointment_user'])->get(['appointment_username'])->toArray();
+            foreach($data2 as $val){
+                $data3 = explode("、",$val['appointment_username']);
+                if(!in_array($value['username'], $data3)){
+                    array_push($data3, $value['username']);
+                    $data4 = implode("、",$data3);
+                    AppointmentList::where('username',$value['appointment_user'])->update(['appointment_username'=>$data4]);
+                }
+            }
         }
 
         return response()->json(['status' => 'success']);

@@ -21,4 +21,6 @@ Route::group([
     $router->get('/Upload','UploadController@index');
     $router->post('/UploadPost','UploadController@upload_post');
     $router->get('/Chart','ChartController@index');
+    $router->get('/Other','OtherController@index');
+    $router->get('/Download/{dbname}','OtherController@download');
 });

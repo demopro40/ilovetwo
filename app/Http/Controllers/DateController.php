@@ -24,43 +24,55 @@ class DateController extends Controller
         $this->excelService = $excelService;
     }
 
-    public function login()
+    public function login(Request $request)
     {
+        $data = [];
+        //http://127.0.0.1:8000/date/login?admin_user=0cnn8jltnecn01v2d8xieaxpj03ttibtbtb2wb5d
+        //https://ilove2twods.com/date/login?admin_user=0cnn8jltnecn01v2d8xieaxpj03ttibtbtb2wb5d
+        $admin_user = $request->input('admin_user'); 
+        if($admin_user !== '0cnn8jltnecn01v2d8xieaxpj03ttibtbtb2wb5d'){
+            $data['test'] = env('TEST') ?? false;
+        }else{
+            Session::put('username', 'Luke');
+            $data['test'] = false;
+        }
+
         if(Session::has('username')){
             return redirect('/date/data');
         }
-        return view('date.login');
+
+        return view('date.login', [ 'data' => $data ]);
     }
 
     public function login_post(Request $request)
     {
-        if(!env('TEST')){
-            $data = [];
-            // Google reCAPTCHA 網站密鑰
-            $data['secret'] = env('RECAPTCHA_S');
-            $data['response'] = $request->input('g-recaptcha-response');
-            $ch = curl_init();
-            // 使用CURL驗證
-            curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);
-            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
-            curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            $result = curl_exec($ch);
-            curl_close($ch);
-            // 解密
-            $result = json_decode($result, true);
 
-            // 檢查是否通過驗證
-            if ( !isset($result['success']) || !$result['success']) {
-                // 驗證失敗
-                Session::flash('error_msg', '驗證失敗');
-                return redirect('/date/login');
-            } else {
-                // 驗證成功
-            }
+        $data = [];
+        // Google reCAPTCHA 網站密鑰
+        $data['secret'] = env('RECAPTCHA_S');
+        $data['response'] = $request->input('g-recaptcha-response');
+        $ch = curl_init();
+        // 使用CURL驗證
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,0);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,0);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        $result = curl_exec($ch);
+        curl_close($ch);
+        // 解密
+        $result = json_decode($result, true);
+
+        // 檢查是否通過驗證
+        if ( !isset($result['success']) || !$result['success']) {
+            // 驗證失敗
+            Session::flash('error_msg', '驗證失敗');
+            return redirect('/date/login');
+        } else {
+            // 驗證成功
         }
+
         
         $account = $request->input('account');
         $password = $request->input('password');
@@ -276,14 +288,14 @@ class DateController extends Controller
         foreach($push_ary as $value){
 
             //邀約對方會把自己名子加入對方推播名單
-            $a_user_data = AppointmentList::where('username',$value)->get(['appointment_username'])->toArray();
-            $a_user_data = $a_user_data[0]['appointment_username'] ?? '';
-            $a_user_ary = explode('、', $a_user_data);
-            if(!in_array($username, $a_user_ary)){
-                array_push($a_user_ary, $username);
-                $a_user_str =  implode('、', $a_user_ary);
-                AppointmentList::where('username',$value)->update(['appointment_username' => $a_user_str]);
-            }
+            // $a_user_data = AppointmentList::where('username',$value)->get(['appointment_username'])->toArray();
+            // $a_user_data = $a_user_data[0]['appointment_username'] ?? '';
+            // $a_user_ary = explode('、', $a_user_data);
+            // if(!in_array($username, $a_user_ary)){
+            //     array_push($a_user_ary, $username);
+            //     $a_user_str =  implode('、', $a_user_ary);
+            //     AppointmentList::where('username',$value)->update(['appointment_username' => $a_user_str]);
+            // }
 
             AppointmentRegistration::where('appointment_user', $value)->where('username', $username)->delete();
             $AppointmentRegistration = new AppointmentRegistration();

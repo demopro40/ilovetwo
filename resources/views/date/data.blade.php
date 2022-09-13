@@ -87,7 +87,7 @@
     <div class="col-sm-12">
         <h3>推播會員 :</h3>
         @foreach($data['push_data'] as $key => $value)
-            <div>
+            <div @if($key == 0 || $key == 1)   @endif>
                 <span>{{ $value['username'] }}</span>&nbsp;&nbsp;
                 @if($data['show'] == 'd' || empty($value['data_url_simple']))
                     <a href="{{ $value['data_url'] }}" target="_blank" style="color:#c3a367;">
