@@ -39,7 +39,7 @@
                             <input type="hidden" name="respond_name[]" value="{{ $value['username'] }}">
                             <div class="col-md-12">
                                 <h3><strong>{{ $value['username'] }}</strong></h3>
-                                @if($data['show'] == 'd' || empty($value['data_url_simple'] || !isset($data['show']) ))
+                                @if($data['show'] == 'd' || empty($value['data_url_simple']))
                                     <a href="{{ $value['data_url'] }}" target="__blank"><u>{{ $value['data_url'] }}</u></a>
                                 @else
                                     <a href="{{ $value['data_url_simple'] }}" target="__blank"><u>{{ $value['data_url_simple'] }}</u></a>

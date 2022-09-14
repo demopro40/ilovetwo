@@ -353,6 +353,7 @@ class DateController extends Controller
         }
         $data['invitation_data'] = array_reverse($invitation_data);
 
+        $data['show'] = '';
         //會員資料連結顯示
         $check = MemberData::where('username', $username)->get(['gender','plan'])->toArray();
         if(!empty($check)){
