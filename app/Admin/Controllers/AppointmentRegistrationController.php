@@ -94,7 +94,12 @@ class AppointmentRegistrationController extends AdminController
             $filter->disableIdFilter();
             $filter->equal('username', '排約會員');
             $filter->equal('appointment_user', '排約對象');
-            $filter->equal('appointment_result', '排約結果');
+            $filter->where(function ($query) {
+                $input = $this->input;
+                if($input == 1){
+                    $query->whereNull('appointment_result');
+                }
+            }, '排約結果為空')->radio(['1' => '選擇(按下"結果配對"排約結果為空，代表時間不匹配，需填上mismatch或其他訊息)']);
         });
 
         $grid->disableExport();
