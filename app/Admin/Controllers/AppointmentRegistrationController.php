@@ -72,10 +72,6 @@ class AppointmentRegistrationController extends AdminController
             if($data == 'no'){
                 return 'no(未回應)';
             }
-            if($data == "mismatch"){
-                $result = "mismatch(時間不匹配)";
-                return $result;
-            }
             if($data == null){
                 return null;
             }
@@ -98,6 +94,7 @@ class AppointmentRegistrationController extends AdminController
             $filter->disableIdFilter();
             $filter->equal('username', '排約會員');
             $filter->equal('appointment_user', '排約對象');
+            $filter->equal('appointment_result', '排約結果');
         });
 
         $grid->disableExport();

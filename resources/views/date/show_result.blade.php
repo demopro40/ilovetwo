@@ -62,8 +62,6 @@
                             <h5>排約結果 : <br><span style="color:red;">對方拒絕邀約</span></h5>
                         @elseif($value['appointment_result'] == 'noTime')
                             <h5>排約結果 : <br><span style="color:red;">時間無法配合，要另約時間</span></h5>
-                        @elseif($value['appointment_result'] == 'mismatch')
-                            <h5>排約結果 : <br><span style="color:red;">時間無法匹配，要另約時間</span></h5>    
                         @else
                             @php 
                                 $week = date('w',strtotime($value['datetime'])); 
