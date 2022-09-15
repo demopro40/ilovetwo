@@ -27,3 +27,11 @@ php artisan insert:excel 2
 php artisan insert:excel 4
 php artisan insert:excel 5
 php artisan insert:excel 6
+
+
+維護流程
+php artisan down
+修改.env Test=true
+php artisan up
+http://127.0.0.1:8000/date/login?admin_user=0cnn8jltnecn01v2d8xieaxpj03ttibtbtb2wb5d
+https://ilove2twods.com/date/login?admin_user=0cnn8jltnecn01v2d8xieaxpj03ttibtbtb2wb5d

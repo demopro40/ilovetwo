@@ -48,9 +48,12 @@ class AppointmentListController extends AdminController
             $ary = explode('、', $data);
             $result = '';
             foreach($ary as $value){
-                $val = MemberData::where('username', $value)->get(['username','live_place','birth_place'])->toArray();
+                $val = MemberData::where('username', $value)->get(['username','live_place','birth_place','describe'])->toArray();
                 if(!empty($val)){
-                    $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")"."(出生:".$val[0]['birth_place'].")"."、";
+                    $result .= $val[0]['username']."(居住:".$val[0]['live_place'].")".
+                    "(出生:".$val[0]['birth_place'].")".
+                    "(".$val[0]['describe'].")".
+                    "、";
                 }
             }
             return $result;
@@ -64,7 +67,7 @@ class AppointmentListController extends AdminController
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->disableView();
             //$actions->disableEdit();
-            //$actions->disableDelete();
+            $actions->disableDelete();
         });
         $grid->tools(function ($tools) {
             $tools->batch(function ($batch) {
@@ -84,6 +87,15 @@ class AppointmentListController extends AdminController
                 }
                 $query->whereIn('username', $ary);
             }, '方案別');
+            $filter->where(function ($query) {
+                $input = $this->input;
+                $data = MemberData::where('gender',$input)->get(['username'])->toArray();
+                $ary = [];
+                foreach($data as $value){
+                    array_push($ary, $value['username']);
+                }
+                $query->whereIn('username', $ary);
+            }, '性別')->radio(['m' => '男','f'=>'女']);
             $filter->where(function ($query) {
                 $input = $this->input;
                 $data = MemberData::where('consultant',$input)->get(['username'])->toArray();
@@ -154,18 +166,25 @@ class AppointmentListController extends AdminController
                     });
                 });
                 $("#push_member").click(function(){
-                    $.post('/api/v1/pushMember',
-                    {
-                        password : "2BGf9RZXDrgJ"
-                    },
-                    function(data, status){
-                        if(status == 'success'){
-                            alert('success');
-                            location.reload();
-                        }else{
-                            alert('fail');
-                        }
-                    });
+
+                    var password = prompt("請輸入密碼", " ");
+                    if(password == '654321'){
+                        $.post('/api/v1/pushMember',
+                        {
+                            password : "2BGf9RZXDrgJ"
+                        },
+                        function(data, status){
+                            if(status == 'success'){
+                                alert('success');
+                                location.reload();
+                            }else{
+                                alert('fail');
+                            }
+                        });
+                    }else{
+                        alert('密碼輸入錯誤');
+                    }
+
                 });
                 $("#gold_push_member").click(function(){
                     $.post('/api/v1/goldPushMember',

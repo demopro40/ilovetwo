@@ -50,7 +50,10 @@ if(!isset($data['show'])){
                                 @endif
                                 <div>約會形式 : {{ $value['type'] }}</div>
                                 @if($value['type'] == '餐廳約會')
-                                    <span>餐廳地點 : {{ $value['restaurant'] }}</span>
+                                    <span>餐廳地點 : {{ $value['restaurant'] }}</span><br>
+                                    @if($value['restaurant_url'] != '[">>>"]')
+                                        <span>餐廳連結 : {{ $value['restaurant_url'] }}</span>
+                                    @endif
                                     <div>選擇可以排約的時間(可複選)或選擇其他回應 : </div>
                                     <?php $datetime = explode('、', $value['datetime']); ?>
                                     @foreach($datetime as $val)

@@ -106,7 +106,7 @@ class AppointmentRegistrationController extends AdminController
         $grid->actions(function (Grid\Displayers\Actions $actions) {
             $actions->disableView();
             //$actions->disableEdit();
-            //$actions->disableDelete();
+            $actions->disableDelete();
         });
         $html = <<<html
             <style>

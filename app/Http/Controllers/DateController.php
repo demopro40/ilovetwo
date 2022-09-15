@@ -350,6 +350,9 @@ class DateController extends Controller
             $data = MemberData::where('username', $value['username'])->get(['data_url', 'data_url_simple'])->toArray();
             $invitation_data[$key]['data_url'] = $data[0]['data_url'];
             $invitation_data[$key]['data_url_simple'] = $data[0]['data_url_simple'];
+
+            $restaurant_url = Restaurant::where('place',$value['restaurant'])->pluck('url');
+            $invitation_data[$key]['restaurant_url'] = $restaurant_url;
         }
         $data['invitation_data'] = array_reverse($invitation_data);
 
@@ -371,6 +374,7 @@ class DateController extends Controller
                 }
             }
         }
+
         $data['username'] = $username;
         return view('date.respond', [ 'data' => $data ]);
     }
