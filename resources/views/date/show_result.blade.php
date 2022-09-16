@@ -65,16 +65,6 @@
                         @elseif($value['appointment_result'] == 'mismatch')
                             <h5>排約結果 : <br><span style="color:red;">時間無法匹配，要另約時間</span></h5>    
                         @else
-                            @php 
-                                $week = date('w',strtotime($value['datetime'])); 
-                                if($week == 0) $week = '日';
-                                if($week == 1) $week = '一';
-                                if($week == 2) $week = '二';
-                                if($week == 3) $week = '三';
-                                if($week == 4) $week = '四';
-                                if($week == 5) $week = '五';
-                                if($week == 6) $week = '六';
-                            @endphp
                             @if($value['give_phone'] !== 'N')
                             <h5>對方手機號 : <span style="color:pink;">{{$value['phone'] ?? ''}}</span></h5>
                             @endif
@@ -82,6 +72,14 @@
                                 @php
                                     $now = strtotime(date('Y-m-d H:i:s'));
                                     $date_time = strtotime($value['appointment_result']);
+                                    $week = date('w', $date_time); 
+                                    if($week == 0) $week = '日';
+                                    if($week == 1) $week = '一';
+                                    if($week == 2) $week = '二';
+                                    if($week == 3) $week = '三';
+                                    if($week == 4) $week = '四';
+                                    if($week == 5) $week = '五';
+                                    if($week == 6) $week = '六';
 
                                     //約會滿意度調查表
                                     $date_start = $date_time + 3*60*60;
@@ -90,9 +88,10 @@
                                     //約會訊息表
                                     $date_start2 = $date_time - 3*60*60;
                                     $date_over2 = $date_time + 3*60*60;
+
                                 @endphp  
                                 <span style="color:pink;">  
-                                {{ date('Y/m/d', $date_time) }} {{ date('H點i分', $date_time) }}
+                                {{ date('Y/m/d', $date_time) }} ({{$week}}) {{ date('H點i分', $date_time) }}
                                 </span>
 
                                 @if($now > $date_start && $now < $date_over)
