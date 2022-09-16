@@ -92,7 +92,7 @@
                                     $date_over2 = $date_time + 3*60*60;
                                 @endphp  
                                 <span style="color:pink;">  
-                                {{ date('Y/m/d', $date_time) }} ({{$week}}) {{ date('H點i分', $date_time) }}
+                                {{ date('Y/m/d', $date_time) }} {{ date('H點i分', $date_time) }}
                                 </span>
 
                                 @if($now > $date_start && $now < $date_over)
