@@ -1,6 +1,6 @@
 @include('date.components.head')
-  <style>
 
+  <style>
         body{
             background-color:#2b2b2b;
             color:#c3a367;
@@ -10,7 +10,12 @@
 <body>
 
 <br><br>
-@if(!$data['test'])
+@if($data['test'] || !(date('w',time()) == 5 && date('H',time()) >= 19) )
+<h1 class="text-center" style="margin-top:7%">網站維護中</h1>
+<footer class="text-center" style="margin-top:30%">
+	Copyright © 2022 Luke Rights Reserved.
+</footer>
+@else
 <div class="container" style="max-width:332px;">
 	<h2 class="text-center"><strong>愛樂Two會員登入</strong></h2>
 	<br>
@@ -46,11 +51,6 @@
 </div>
 
 <footer class="text-center" style="margin-top:20%">
-	Copyright © 2022 Luke Rights Reserved.
-</footer>
-@else
-	<h1 class="text-center" style="margin-top:7%">網站維護中</h1>
-<footer class="text-center" style="margin-top:30%">
 	Copyright © 2022 Luke Rights Reserved.
 </footer>
 @endif

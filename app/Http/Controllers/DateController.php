@@ -518,9 +518,9 @@ class DateController extends Controller
             }
         }elseif($type == 3){
             //星期五晚上七點之後 或 週六 或 週日
-            if(($w == 5 && $H >= 19 ) || $w == 6 || $w == 0){
+            //if(($w == 5 && $H >= 19 ) || $w == 6 || $w == 0){
                 return true;
-            }
+            //}
         }else{
             return false;
         }
