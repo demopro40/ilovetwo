@@ -18,7 +18,7 @@ class CheckStatus
         if(Session::has('username') && Session::get('username') == 'Luke'){
             return $next($request);
         }
-        if(env('TEST') || !(date('w',time()) == 5 && date('H',time()) >= 19)){
+        if(env('TEST')){
             return redirect('/date/logout');
         }
         return $next($request);

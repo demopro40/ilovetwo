@@ -10,7 +10,7 @@
 <body>
 
 <br><br>
-@if($data['test'] || !(date('w',time()) == 5 && date('H',time()) >= 19) )
+@if($data['test'])
 <h1 class="text-center" style="margin-top:7%">網站維護中</h1>
 <footer class="text-center" style="margin-top:30%">
 	Copyright © 2022 Luke Rights Reserved.
