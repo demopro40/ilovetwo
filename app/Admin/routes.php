@@ -18,6 +18,7 @@ Route::group([
     $router->resource('/Restaurant','RestaurantController');
     $router->resource('/RestaurantDate','RestaurantDateController');
     $router->resource('/VideoDate','VideoDateController');
+    $router->resource('/PushFactor','PushFactorController');
     $router->get('/Upload','UploadController@index');
     $router->post('/UploadPost','UploadController@upload_post');
     $router->get('/Chart','ChartController@index');

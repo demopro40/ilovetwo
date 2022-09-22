@@ -116,6 +116,7 @@ class AppointmentListController extends AdminController
             // $tools->append(new AddMember());
             // $tools->append(new PushMember());
             //$tools->append(new BackMember());
+            //$tools->append("<button class='push-factor' id='push_factor'>前往推播篩選表</button>");
             $tools->append("<button class='add-member' id='add_member'>新增推播</button>");
             $tools->append("<button class='push-member' id='push_member'>確認推播</button>");
             $tools->append("<button class='gold-push-member' id='gold_push_member'>黃金會員推播</button>");
@@ -124,6 +125,11 @@ class AppointmentListController extends AdminController
 
         $html = <<<html
             <style>
+                .push-factor{
+                    background-color:purple;
+                    padding:5px 10px; 
+                    color:white;
+                }
                 .add-member{
                     background-color:green;
                     padding:5px 10px; 
@@ -151,6 +157,9 @@ class AppointmentListController extends AdminController
                 }
             </style>
             <script>
+                $("#push_factor").click(function(){
+                    location.href="/admin/PushFactor"
+                });
                 $("#add_member").click(function(){
                     $.post('/api/v1/addMember',
                     {

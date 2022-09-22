@@ -1,16 +1,33 @@
-@include('date.components.head')
-
-  <style>
-        body{
-            background-color:#2b2b2b;
-            color:#c3a367;
-        }
-    </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>愛樂Two排約</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="refresh" content="csrf_timeout_in_seconds">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel = "icon" type = "image/png" href = "name-of-image.png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			background-color:#2b2b2b;
+			color:#c3a367;
+		}
+	</style>
 </head>
 <body>
-
+@php
+    $maintain = false;
+	$w = date('w',time());
+    $H = date('H',time());
+	if( $w == 5 && $H <= 19 ){
+		$maintain = true;
+	}
+@endphp
 <br><br>
-@if($data['test'])
+@if($data['test'] || $maintain)
 <h1 class="text-center" style="margin-top:7%">網站維護中</h1>
 <footer class="text-center" style="margin-top:30%">
 	Copyright © 2022 Luke Rights Reserved.
