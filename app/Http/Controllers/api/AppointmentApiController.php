@@ -8,6 +8,7 @@ use App\Models\AppointmentList;
 use App\Models\MemberData;
 use App\Models\AppointmentRegistration;
 use App\Services\PairTimeService;
+use App\Models\PushFactor;
 
 class AppointmentApiController extends Controller
 {
@@ -50,6 +51,12 @@ class AppointmentApiController extends Controller
                         ->whereNotIn('gender', [$gender])
                         ->pluck('username')
                         ->toArray();
+            // $want_factor = PushFactor::where('username', $username)->get();
+            // \Log::info($want_factor);
+            // foreach($data as $value){
+            //     $correspond_factor = PushFactor::where('username', $value)->get();
+            //     \Log::info($correspond_factor);
+            // }            
             if(count($data) > 1){
                 $rand_keys = array_rand ($data, 2); 
                 $str = $data[$rand_keys[0]].'、'.$data[$rand_keys[1]];
