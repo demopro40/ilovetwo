@@ -47,8 +47,10 @@ class ExecSpecial extends Command
             array_push($ary, $i);
         }
 
-        AppointmentRegistration::whereIn('id', $ary)
-            ->update(['appointment_result' => null]);
+        // AppointmentRegistration::whereIn('id', $ary)
+        //     ->update(['appointment_result' => null]);
+        AppointmentList::whereIn('id', $ary)
+            ->update(['appointment_user_new' => null]);
 
         echo 'end';
     }

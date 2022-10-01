@@ -22,12 +22,12 @@
     $maintain = false;
 	$w = date('w',time());
     $H = date('H',time());
-	if( $w == 5 && $H <= 19 ){
+	if( $w == 5 && $H < 19 ){
 		$maintain = true;
 	}
 @endphp
 <br><br>
-@if($data['test'])
+@if($data['test'] || $maintain)
 <h1 class="text-center" style="margin-top:7%">網站維護中</h1>
 <footer class="text-center" style="margin-top:30%">
 	Copyright © 2022 Luke Rights Reserved.

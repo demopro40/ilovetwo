@@ -8,7 +8,7 @@ use App\Models\AppointmentList;
 use App\Models\MemberData;
 use App\Models\AppointmentRegistration;
 use App\Services\PairTimeService;
-use App\Models\PushFactor;
+use Log;
 
 class AppointmentApiController extends Controller
 {
@@ -42,36 +42,141 @@ class AppointmentApiController extends Controller
             $appointment_username = $value['appointment_username'];
             $appointment_user_new = $value['appointment_user_new'];
             $appointment_user_excluded = $value['appointment_user_excluded'];
-            $gender = MemberData::where('username', $username)->pluck('gender')->first();
             $appointment_username_ary = explode('、', $appointment_username);
             $appointment_user_new_ary = explode('、', $appointment_user_new);
             $appointment_user_excluded_ary = explode('、', $appointment_user_excluded);
-            $ary = array_merge($appointment_username_ary, $appointment_user_new_ary, $appointment_user_excluded_ary);
-            $data = MemberData::whereNotIn('username',$ary)
-                        ->whereNotIn('gender', [$gender])
-                        ->pluck('username')
-                        ->toArray();
-            // $want_factor = PushFactor::where('username', $username)->get();
-            // \Log::info($want_factor);
-            // foreach($data as $value){
-            //     $correspond_factor = PushFactor::where('username', $value)->get();
-            //     \Log::info($correspond_factor);
-            // }            
-            if(count($data) > 1){
-                $rand_keys = array_rand ($data, 2); 
-                $str = $data[$rand_keys[0]].'、'.$data[$rand_keys[1]];
-            }
-            if(count($data) == 1){
-                $str = $data[0];
-            } 
-            if(count($data) == 0){
-                $str = null;
-            } 
+            $not_select_ary = array_merge($appointment_username_ary, $appointment_user_new_ary, $appointment_user_excluded_ary);
+
+            $factor = MemberData::where('username', $username)
+            ->get(['gender','live_place','birth_place','o_age','o_job','o_height','o_weight','o_income'])
+            ->toArray();
+
+            if(!isset($factor[0])) continue;
+
+            $o_ary = $this->pairFactor($factor[0], $not_select_ary);
+
+            if(!isset($o_ary[0])) continue;
+           
+            $o_count_ary = array_count_values($o_ary);
+
+            $result = [];
+
+            $m = @max($o_count_ary);
+            $k = array_search($m, $o_count_ary); 
+            $result[0] = $k;
+
+            unset($o_count_ary[$k]);
+
+            $m = @max($o_count_ary);
+            $k = array_search($m, $o_count_ary); 
+            $result[1] = $k;
+
+            $str = implode("、", $result);
+
             AppointmentList::where('username', $username)->update(['appointment_user_new' => $str]);
         }
 
         return response()->json(['status' => 'success']);
     }
+	
+	private function pairFactor($factor, $not_select_ary=[])
+	{
+        $data = [];
+        $gender = $factor['gender'];
+        $live_place = $factor['live_place'];
+        $birth_place = $factor['birth_place'];
+        $o_age = $factor['o_age'];
+        $o_job = $factor['o_job'];
+        $o_height = $factor['o_height'];
+        $o_weight = $factor['o_weight'];
+        $o_income = $factor['o_income'];
+
+
+        if($o_age != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('age', $o_age)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+        if($o_job != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('job', $o_job)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+        if($o_height != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('height', $o_height)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+        if($o_weight != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('weight', $o_weight)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+        if($o_income != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('income', ">=" ,$o_income)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+
+        if($live_place != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('live_place', $live_place)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+
+        if($birth_place != null){
+            $res = MemberData::whereNotIn('gender', [$gender])
+            ->whereNotIn('username', $not_select_ary)
+            ->where('birth_place', $birth_place)
+            ->pluck('username')
+            ->toArray();
+            foreach($res as $value){
+                array_push($data, $value);
+            }
+        }
+
+        $res = MemberData::whereNotIn('gender', [$gender])
+                    ->whereNotIn('username', $not_select_ary)
+                    ->orderBy(\DB::raw('RAND()')) 
+                    ->take(2) 
+                    ->pluck('username')
+                    ->toArray();
+        foreach($res as $value){
+            array_push($data, $value);
+        }
+
+        return $data;
+	}
 
     public function pushMember(Request $request)
     {

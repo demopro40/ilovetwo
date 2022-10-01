@@ -15,6 +15,7 @@ use App\Services\PairTimeService;
 use App\Services\ExcelService;
 use Session;
 use Validator;
+use DB;
 
 class DateController extends Controller
 {
@@ -530,5 +531,6 @@ class DateController extends Controller
     {
        
     }
+
 
 }
