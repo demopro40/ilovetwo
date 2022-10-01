@@ -15,6 +15,14 @@
 			background-color:#2b2b2b;
 			color:#c3a367;
 		}
+		.footer {
+			margin-top:15%;
+		}
+		@media only screen and (max-width: 800px) {
+			.footer {
+				margin-top:30%;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -67,8 +75,8 @@
 	</form>
 </div>
 
-<footer class="text-center" style="margin-top:20%">
-	Copyright © 2022 Luke Rights Reserved.
+<footer class="text-center footer">
+	Copyright © 2022 愛樂Two All Rights Reserved. 製作開發 © Luke
 </footer>
 @endif
 
