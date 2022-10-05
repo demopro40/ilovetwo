@@ -76,7 +76,7 @@
 </div>
 
 <footer class="text-center footer">
-	Copyright © 2022 愛樂Two All Rights Reserved. 製作開發 © Luke
+	Copyright © 2022 Luke All Rights Reserved
 </footer>
 @endif
 
