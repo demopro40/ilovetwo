@@ -18,9 +18,9 @@ class CheckStatus
         if(Session::has('username') && Session::get('username') == 'Luke'){
             return $next($request);
         }
-        if(env('TEST')){
-            return redirect('/date/logout');
-        }
+        // if(env('TEST')){
+        //     return redirect('/date/logout');
+        // }
         return $next($request);
     }
 }

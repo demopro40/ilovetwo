@@ -33,6 +33,7 @@
 	if( $w == 5 && $H < 19 ){
 		$maintain = true;
 	}
+
 @endphp
 <br><br>
 @if($data['test'] || $maintain)
