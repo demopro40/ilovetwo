@@ -99,9 +99,6 @@ class DB2Seeder extends Seeder
             );
         }
 
-        //密碼:472rht6syuygmgwa
-        //密碼:rhyc2w5qvrasz5wz
-        //密碼:97dzkhmcwaxveujk
         $password0 = '$2y$10$KVZ6i4by5jZ.4gm5xT5K0Ojs52mpOwnW14nueei3DUMN2qZRN4aJu';
         $remember_token0 = 'sNMxAp4bi5g7jkoVj0Zpv5DCyZEB4s2XZzfaTssKk8EOq9a6rlv7aNLcopmP';
         $password = '$2y$10$sqwDNw0z0kAj8phxepOIneb3h8PcQ/UuGnAh4hxKV/8YVI6E.kabG';
